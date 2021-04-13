@@ -10,7 +10,12 @@ public class PlayerController : MonoBehaviour
     }
 
     [Header("Movement config")]
-    public float mForce;
+    public float forwardForce;
+
+    // Adding some range to keep it a bit smooth
+    [Range(1, 2)]
+    public float angularForce;
+
     public float mBoost;
     public MovementType mType;
 
@@ -97,12 +102,12 @@ public class PlayerController : MonoBehaviour
 
     void Move(Vector2 dir)
     {
-        body.AddForce(dir * mForce * mBoost);
+        body.AddForce(dir * forwardForce * mBoost);
     } // Move
 
     void Rotate(float torque)
     {
-        body.AddTorque(torque * mForce);
+        body.AddTorque(torque * angularForce);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
