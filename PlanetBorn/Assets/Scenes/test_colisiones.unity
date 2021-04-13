@@ -134,8 +134,9 @@ GameObject:
   - component: {fileID: 1012339763}
   - component: {fileID: 1012339762}
   - component: {fileID: 1012339764}
+  - component: {fileID: 1012339765}
   m_Layer: 0
-  m_Name: Generador asteroides
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,9 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a828506059b73854b993772578a67f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAsteroides: 10
+  maxAsteroides: 100
   asteroide: {fileID: 1482368637286980136, guid: d95fdc4b6d6598843911a85e9e0eb154, type: 3}
-  mapLimit: {x: 50, y: 50}
+  mapLimit: {x: 100, y: 100}
 --- !u!4 &1012339763
 Transform:
   m_ObjectHideFlags: 0
@@ -196,6 +197,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 100, y: 100}
   m_EdgeRadius: 0
+--- !u!114 &1012339765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012339761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c854e8df877c22409243fae9fe65aab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nave: {fileID: 6870982766863647611, guid: 51aca4cc31e6bb04fa56202db8706018, type: 3}
 --- !u!1 &1908889448
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +263,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

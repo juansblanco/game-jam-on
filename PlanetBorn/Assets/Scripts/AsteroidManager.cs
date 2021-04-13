@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AsteroidManager : MonoBehaviour
 {
@@ -38,15 +40,15 @@ public class AsteroidManager : MonoBehaviour
         Vector2 position = new Vector2(Random.Range(-0.5f*mapLimit.x, 0.5f*mapLimit.x), Random.Range(-0.5f*mapLimit.y, 0.5f*mapLimit.y));
         Instantiate(asteroide,  position, Quaternion.identity);
     }
-
+    
     void OnTriggerExit2D(Collider2D c)
     {
-        Debug.Log(c);
         if (c.gameObject.GetComponent<Asteroid>())
         {
+            Debug.Log("Nuevo asteroide");
             Destroy(c.gameObject);
             GeneraNuevoAsteroide();
         }
     }
-        
+
 }

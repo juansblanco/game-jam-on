@@ -171,7 +171,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mForce: 100
   mTorque: 5
-  aType: 0
+  aColor: 0
+  aSize: 0
 --- !u!58 &626978229
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -308,7 +309,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mForce: 100
   mTorque: 5
-  aType: 0
+  aColor: 0
+  aSize: 0
 --- !u!58 &774229572
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -482,7 +484,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mForce: 100
   mTorque: 5
-  aType: 0
+  aColor: 0
+  aSize: 0
 --- !u!58 &1139132594
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -624,7 +627,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mForce: 100
   mTorque: 5
-  aType: 0
+  aColor: 0
+  aSize: 0
 --- !u!58 &1671984664
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -761,7 +765,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mForce: 100
   mTorque: 5
-  aType: 0
+  aColor: 0
+  aSize: 0
 --- !u!58 &1738432599
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -898,7 +903,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mForce: 100
   mTorque: 5
-  aType: 0
+  aColor: 0
+  aSize: 0
 --- !u!58 &1943954173
 CircleCollider2D:
   m_ObjectHideFlags: 0

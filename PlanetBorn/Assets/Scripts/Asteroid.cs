@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,20 +16,21 @@ public class Asteroid : MonoBehaviour
 
     public enum AsteroidSize
     {
-        VERY_SMALL,
-        SMALL,
-        MEDIUM,
-        BIG,
-        VERY_BIG,
-        ULTRA_BIG,
-        ULTRA_MEGA_BIG
+        VERY_SMALL = 0,
+        SMALL = 1,
+        MEDIUM = 2,
+        BIG = 3,
+        VERY_BIG = 4,
+        ULTRA_BIG = 5,
+        ULTRA_MEGA_BIG = 6
     }
 
-    [Header("Movement config")]
-    public float mForce;
+    [Header("Movement config")] public float mForce;
     public float mTorque;
 
     public AsteroidColor aColor;
+
+    public AsteroidSize aSize;
 
     // Private
     private Rigidbody2D body;
@@ -39,12 +41,13 @@ public class Asteroid : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         InitialForce();
         SetColorBasedOnType();
+        aSize = (AsteroidSize) Random.Range(0, 4);
         SetAsteroidSize();
     }
 
     private void SetColorBasedOnType()
     {
-        aColor = (AsteroidColor)UnityEngine.Random.Range(0, 3);
+        aColor = (AsteroidColor) UnityEngine.Random.Range(0, 3);
         switch (aColor)
         {
             case AsteroidColor.GREEN:
@@ -62,7 +65,7 @@ public class Asteroid : MonoBehaviour
     void SetAsteroidSize()
     {
         Vector3 scale;
-        switch ((AsteroidSize)Random.Range(0, 7))
+        switch (aSize)
         {
             case AsteroidSize.VERY_SMALL:
                 scale = new Vector3(0.5f, 0.5f, transform.localScale.z);
@@ -83,9 +86,10 @@ public class Asteroid : MonoBehaviour
                 scale = new Vector3(4, 4, transform.localScale.z);
                 break;
             case AsteroidSize.ULTRA_MEGA_BIG:
-                scale = new Vector3(10, 10, transform.localScale.z);
+                scale = new Vector3(6, 6, transform.localScale.z);
                 break;
             default:
+                Debug.Log("Asteroid creation failed");
                 scale = new Vector3(0, 0, 0);
                 break;
         }
@@ -97,23 +101,42 @@ public class Asteroid : MonoBehaviour
     void Update()
     {
         // body.AddForce(new Vector2(1, -1) * mForce);
-        
     }
+
     private void InitialForce()
     {
         Vector2 v = new Vector2(UnityEngine.Random.Range(-1f, 1f),
-                    UnityEngine.Random.Range(-1f, 1f));
+            UnityEngine.Random.Range(-1f, 1f));
         Debug.Log("v " + v);
         body.AddForce(
             v * mForce);
         body.AddTorque(UnityEngine.Random.Range(-1f, 1f) * mTorque);
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Asteroid" && 
-            collision.gameObject.GetComponent<Asteroid>().aColor == aColor)
+        Asteroid asteroid = collision.gameObject.GetComponent<Asteroid>();
+        if (asteroid &&
+            asteroid.aColor == aColor)
+            AsteroidFusion(asteroid);
+    }
+
+    //Fusiona los asteroides del mismo color que chocan
+    void AsteroidFusion(Asteroid asteroid)
+    {
+        Debug.Log("puff y se unen: " + asteroid.aSize + this.aSize);
+        //AsteroidSize maxSize = Math.Max((int) asteroid.aSize, (int) this.aSize);
+        if (asteroid.aSize > this.aSize)
         {
-            Debug.Log("puff y se unen");
+            asteroid.aSize++;
+            SetAsteroidSize();
+            Destroy(this);
+        }
+        else
+        {
+            this.aSize++;
+            SetAsteroidSize();
+            Destroy(asteroid.gameObject);
         }
     }
 }
