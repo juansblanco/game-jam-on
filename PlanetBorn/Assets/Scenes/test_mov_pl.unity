@@ -635,8 +635,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4329376980f8ac47b00c9107336560b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardForce: 7
-  angularForce: 1.087
+  forwardForce: 15
+  angularForce: 2
   mBoost: 0
   mType: 1
 --- !u!50 &1349810646

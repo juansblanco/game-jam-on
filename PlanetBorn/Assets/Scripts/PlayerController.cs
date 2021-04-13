@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
     // Private
     private Rigidbody2D body;
+    private Vector2 mDir;
+    private float mTorque;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +44,14 @@ public class PlayerController : MonoBehaviour
         Boost();
     } // Update
 
+    private void FixedUpdate()
+    {
+        Move();
+        Rotate();
+        mDir = Vector2.zero;
+        mTorque = 0;
+    }
+
     private void Boost()
     {
         if (Input.GetKey(KeyCode.Space))
@@ -56,58 +66,54 @@ public class PlayerController : MonoBehaviour
 
     private void EveryDirectionMovementBehaviour()
     {
-        Vector2 dir = new Vector2(0, 0);
-
         if (Input.GetKey(KeyCode.W))
         {
-            dir.y = 1;
+            mDir.y = 1;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            dir.x = -1;
+            mDir.x = -1;
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            dir.y = -1;
+            mDir.y = -1;
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            dir.x = 1;
+            mDir.x = 1;
         }
-
-        Move(dir.normalized);
     }
     private void ForwardAndRotationMovementBehaviour()
     {
         if (Input.GetKey(KeyCode.W))
         {
-            Move(transform.up);
+            mDir = transform.up;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            Rotate(1);
+            mTorque = 1;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            Move(-transform.up);
+            mDir = -transform.up;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            Rotate(-1);
+            mTorque = -1;
         }
     }
 
-    void Move(Vector2 dir)
+    void Move()
     {
-        body.AddForce(dir * forwardForce * mBoost);
+        body.AddForce(mDir.normalized * forwardForce * mBoost);
     } // Move
 
-    void Rotate(float torque)
+    void Rotate()
     {
-        body.AddTorque(torque * angularForce);
+        body.AddTorque(mTorque * angularForce);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
