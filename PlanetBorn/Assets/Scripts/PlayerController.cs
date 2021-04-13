@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     public float mBoost;
     public MovementType mType;
 
+    [Header("Mechanics")]
+    public ShipRange forceField;
+
     // Private
     private Rigidbody2D body;
     private Vector2 mDir;
@@ -33,6 +36,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.E)) // Empujar
+        {
+            forceField.Push();
+        }
+
+        if(Input.GetKey(KeyCode.Q))
+        {
+            forceField.Pull();
+        }
+
         if(mType == MovementType.EVERYDIRECTION)
         {
             EveryDirectionMovementBehaviour();
