@@ -1,10 +1,18 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public enum MovementType
+    {
+        EVERYDIRECTION,
+        FORWARDANDROTATION
+    }
+
     [Header("Movement config")]
     public float mForce;
-
+    public float mBoost;
+    public MovementType mType;
 
     // Private
     private Rigidbody2D body;
@@ -18,39 +26,90 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(mType == MovementType.EVERYDIRECTION)
+        {
+            EveryDirectionMovementBehaviour();
+        }
+        else
+        {
+            ForwardAndRotationMovementBehaviour();
+        }
+        Boost();
+    } // Update
+
+    private void Boost()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            mBoost = 2;
+        }
+        else
+        {
+            mBoost = 1;
+        }
+    }
+
+    private void EveryDirectionMovementBehaviour()
+    {
         Vector2 dir = new Vector2(0, 0);
 
         if (Input.GetKey(KeyCode.W))
         {
-            Debug.Log("Forward");
             dir.y = 1;
-        } 
-        
+        }
+
         if (Input.GetKey(KeyCode.A))
         {
-            Debug.Log("Left");
             dir.x = -1;
-        } 
-        
+        }
+
         if (Input.GetKey(KeyCode.S))
         {
-            Debug.Log("Down");
             dir.y = -1;
         }
-        
+
         if (Input.GetKey(KeyCode.D))
         {
-            Debug.Log("Right");
             dir.x = 1;
         }
 
         Move(dir.normalized);
-    } // Update
+    }
+    private void ForwardAndRotationMovementBehaviour()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            Move(transform.up);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            Rotate(1);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            Move(-transform.up);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            Rotate(-1);
+        }
+    }
 
     void Move(Vector2 dir)
     {
-        dir *= mForce;
-
-        body.AddForce(dir);
+        body.AddForce(dir * mForce * mBoost);
     } // Move
+
+    void Rotate(float torque)
+    {
+        body.AddTorque(torque * mForce);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("collision " + collision.relativeVelocity);
+        float collisionValue = Math.Abs(collision.relativeVelocity.x) + Math.Abs(collision.relativeVelocity.y);
+        Debug.Log("collision value " + collisionValue);
+        // Podemos usar esto para calcular los impactos?
+    }
 }
