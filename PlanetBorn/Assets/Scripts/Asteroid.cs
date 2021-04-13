@@ -103,6 +103,11 @@ public class Asteroid : MonoBehaviour
         // body.AddForce(new Vector2(1, -1) * mForce);
     }
 
+    public void AddForce(Vector2 dir, float force)
+    {
+        body.AddForce(dir * force);
+    } // AddForce
+
     private void InitialForce()
     {
         Vector2 v = new Vector2(UnityEngine.Random.Range(-1f, 1f),
