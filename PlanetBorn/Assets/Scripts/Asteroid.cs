@@ -112,7 +112,6 @@ public class Asteroid : MonoBehaviour
     {
         Vector2 v = new Vector2(UnityEngine.Random.Range(-1f, 1f),
             UnityEngine.Random.Range(-1f, 1f));
-        Debug.Log("v " + v);
         body.AddForce(
             v * mForce);
         body.AddTorque(UnityEngine.Random.Range(-1f, 1f) * mTorque);

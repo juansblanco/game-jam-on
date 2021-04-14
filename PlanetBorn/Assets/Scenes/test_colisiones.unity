@@ -132,9 +132,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1012339763}
+  - component: {fileID: 1012339765}
   - component: {fileID: 1012339762}
   - component: {fileID: 1012339764}
-  - component: {fileID: 1012339765}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -157,6 +157,8 @@ MonoBehaviour:
   maxAsteroides: 100
   asteroide: {fileID: 1482368637286980136, guid: d95fdc4b6d6598843911a85e9e0eb154, type: 3}
   mapLimit: {x: 100, y: 100}
+  player: {fileID: 0}
+  playerSpawnDistance: 20
 --- !u!4 &1012339763
 Transform:
   m_ObjectHideFlags: 0

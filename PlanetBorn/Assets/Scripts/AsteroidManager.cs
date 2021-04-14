@@ -14,11 +14,21 @@ public class AsteroidManager : MonoBehaviour
     [Header("Tamaño del mapa")]
     public Vector2 mapLimit;
 
+    [Header("Player")]
+    public GameObject player;
+    public float playerSpawnDistance;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        GeneracionInicial();
+        //GeneracionInicial();
         GetComponent<BoxCollider2D>().size = mapLimit;
+    }
+
+    internal void SetPlayer(GameObject nObject)
+    {
+        player = nObject;
     }
 
     // Update is called once per frame
@@ -27,7 +37,7 @@ public class AsteroidManager : MonoBehaviour
         
     }
 
-    void GeneracionInicial()
+    public void GeneracionInicial()
     {
         for (int i = 0; i < maxAsteroides; i++)
         {
@@ -37,10 +47,23 @@ public class AsteroidManager : MonoBehaviour
 
     void GeneraNuevoAsteroide()
     {
-        Vector2 position = new Vector2(Random.Range(-0.5f*mapLimit.x, 0.5f*mapLimit.x), Random.Range(-0.5f*mapLimit.y, 0.5f*mapLimit.y));
-        Instantiate(asteroide,  position, Quaternion.identity);
+        // Vector2 position = new Vector2(Random.Range(-0.5f*mapLimit.x, 0.5f*mapLimit.x), Random.Range(-0.5f*mapLimit.y, 0.5f*mapLimit.y));
+        Vector2 position = PosicionRandomFueraJugador();
+        GameObject randomAsteroid = Instantiate(asteroide, position, Quaternion.identity);
+        // randomAsteroid.GetComponent<Asteroid>().RandomizeAsteroid();
     }
-    
+
+    private Vector2 PosicionRandomFueraJugador()
+    {
+        Vector2 position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x), Random.Range(-0.5f * mapLimit.y, 0.5f * mapLimit.y));
+        while(Vector2.Distance(position, player.transform.position) <= playerSpawnDistance)
+        {
+            position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x), Random.Range(-0.5f * mapLimit.y, 0.5f * mapLimit.y));
+        }
+
+        return position;
+    }
+
     void OnTriggerExit2D(Collider2D c)
     {
         if (c.gameObject.GetComponent<Asteroid>())
