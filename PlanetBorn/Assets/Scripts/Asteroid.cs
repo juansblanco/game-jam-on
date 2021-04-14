@@ -27,6 +27,9 @@ public class Asteroid : MonoBehaviour
         ULTRA_MEGA_BIG
     }
 
+    [Header("Configure sprites")]
+    public Sprite[] sprites;
+
     [Header("Movement config")] public float mForce;
     public float mTorque;
 
@@ -61,16 +64,20 @@ public class Asteroid : MonoBehaviour
         switch (aColor)
         {
             case AsteroidColor.GREEN:
-                GetComponent<SpriteRenderer>().color = Color.green;
+                //GetComponent<SpriteRenderer>().color = Color.green;
+                GetComponent<SpriteRenderer>().sprite = sprites[2];
                 break;
             case AsteroidColor.RED:
-                GetComponent<SpriteRenderer>().color = Color.red;
+                //GetComponent<SpriteRenderer>().color = Color.red;
+                GetComponent<SpriteRenderer>().sprite = sprites[1];
                 break;
             case AsteroidColor.YELLOW:
-                GetComponent<SpriteRenderer>().color = Color.yellow;
+                //GetComponent<SpriteRenderer>().color = Color.yellow;
+                GetComponent<SpriteRenderer>().sprite = sprites[3];
                 break;
             case AsteroidColor.GREY:
                 GetComponent<SpriteRenderer>().color = Color.grey;
+                GetComponent<SpriteRenderer>().sprite = sprites[0];
                 break;
         }
     }

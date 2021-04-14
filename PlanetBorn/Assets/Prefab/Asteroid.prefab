@@ -134,6 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097ef563f06e6b24684b866c4e0a76c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: f6c19ba80cfac004bac5a2d2c0a3e59d, type: 3}
+  - {fileID: 21300000, guid: 0871900330b72b6479f87d5f789cbbc2, type: 3}
+  - {fileID: 21300000, guid: c96becbde95829546bc463366a7abcd0, type: 3}
+  - {fileID: 21300000, guid: dc0848f284b49534e9761a28cc808715, type: 3}
   mForce: 100
   mTorque: 5
   aColor: 0
