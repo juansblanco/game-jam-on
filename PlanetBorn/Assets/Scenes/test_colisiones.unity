@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a828506059b73854b993772578a67f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAsteroides: 100
+  maxAsteroides: 200
   asteroide: {fileID: 1482368637286980136, guid: d95fdc4b6d6598843911a85e9e0eb154, type: 3}
   mapLimit: {x: 100, y: 100}
   player: {fileID: 0}

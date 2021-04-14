@@ -5,6 +5,7 @@ using TMPro.EditorUtilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
 public class Asteroid : MonoBehaviour
 {
     public enum AsteroidColor
@@ -16,13 +17,13 @@ public class Asteroid : MonoBehaviour
 
     public enum AsteroidSize
     {
-        VERY_SMALL = 0,
-        SMALL = 1,
-        MEDIUM = 2,
-        BIG = 3,
-        VERY_BIG = 4,
-        ULTRA_BIG = 5,
-        ULTRA_MEGA_BIG = 6
+        VERY_SMALL,
+        SMALL,
+        MEDIUM,
+        BIG,
+        VERY_BIG,
+        ULTRA_BIG,
+        ULTRA_MEGA_BIG
     }
 
     [Header("Movement config")] public float mForce;
@@ -40,14 +41,18 @@ public class Asteroid : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         InitialForce();
+    }
+
+    public void RandomizeAsteroid()
+    {
+        aColor = (AsteroidColor) UnityEngine.Random.Range(0, 3);
         SetColorBasedOnType();
         aSize = (AsteroidSize) Random.Range(0, 4);
         SetAsteroidSize();
     }
 
-    private void SetColorBasedOnType()
+    void SetColorBasedOnType()
     {
-        aColor = (AsteroidColor) UnityEngine.Random.Range(0, 3);
         switch (aColor)
         {
             case AsteroidColor.GREEN:
@@ -112,6 +117,7 @@ public class Asteroid : MonoBehaviour
     {
         Vector2 v = new Vector2(UnityEngine.Random.Range(-1f, 1f),
             UnityEngine.Random.Range(-1f, 1f));
+        //Debug.Log("v " + v);
         body.AddForce(
             v * mForce);
         body.AddTorque(UnityEngine.Random.Range(-1f, 1f) * mTorque);
@@ -128,19 +134,24 @@ public class Asteroid : MonoBehaviour
     //Fusiona los asteroides del mismo color que chocan
     void AsteroidFusion(Asteroid asteroid)
     {
-        Debug.Log("puff y se unen: " + asteroid.aSize + this.aSize);
-        //AsteroidSize maxSize = Math.Max((int) asteroid.aSize, (int) this.aSize);
+        Debug.Log("puff y se unen: " + asteroid.aSize + " con " + this.aSize);
         if (asteroid.aSize > this.aSize)
         {
-            asteroid.aSize++;
-            SetAsteroidSize();
-            Destroy(this);
+            if (asteroid.aSize < AsteroidSize.ULTRA_MEGA_BIG)
+            {
+                asteroid.aSize++;
+                asteroid.SetAsteroidSize();
+                Destroy(this);
+            }
         }
         else
         {
-            this.aSize++;
-            SetAsteroidSize();
-            Destroy(asteroid.gameObject);
+            if (this.aSize < AsteroidSize.ULTRA_MEGA_BIG)
+            {
+                this.aSize++;
+                SetAsteroidSize();
+                Destroy(asteroid.gameObject);
+            }
         }
     }
 }

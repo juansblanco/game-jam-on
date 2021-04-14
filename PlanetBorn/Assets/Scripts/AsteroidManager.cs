@@ -6,16 +6,13 @@ using Random = UnityEngine.Random;
 
 public class AsteroidManager : MonoBehaviour
 {
-    [Header("Numero max de asteroides")]
-    public int maxAsteroides;
+    [Header("Numero max de asteroides")] public int maxAsteroides;
 
     public GameObject asteroide;
 
-    [Header("Tamaño del mapa")]
-    public Vector2 mapLimit;
+    [Header("Tamaño del mapa")] public Vector2 mapLimit;
 
-    [Header("Player")]
-    public GameObject player;
+    [Header("Player")] public GameObject player;
     public float playerSpawnDistance;
 
 
@@ -34,7 +31,6 @@ public class AsteroidManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void GeneracionInicial()
@@ -47,20 +43,21 @@ public class AsteroidManager : MonoBehaviour
 
     void GeneraNuevoAsteroide()
     {
-        // Vector2 position = new Vector2(Random.Range(-0.5f*mapLimit.x, 0.5f*mapLimit.x), Random.Range(-0.5f*mapLimit.y, 0.5f*mapLimit.y));
-        Vector2 position = PosicionRandomFueraJugador();
+        Vector2 position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x),
+            Random.Range(-0.5f * mapLimit.y, 0.5f * mapLimit.y));
         GameObject randomAsteroid = Instantiate(asteroide, position, Quaternion.identity);
-        // randomAsteroid.GetComponent<Asteroid>().RandomizeAsteroid();
+        randomAsteroid.GetComponent<Asteroid>().RandomizeAsteroid();
     }
 
     private Vector2 PosicionRandomFueraJugador()
     {
-        Vector2 position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x), Random.Range(-0.5f * mapLimit.y, 0.5f * mapLimit.y));
-        while(Vector2.Distance(position, player.transform.position) <= playerSpawnDistance)
+        Vector2 position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x),
+            Random.Range(-0.5f * mapLimit.y, 0.5f * mapLimit.y));
+        while (Vector2.Distance(position, player.transform.position) <= playerSpawnDistance)
         {
-            position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x), Random.Range(-0.5f * mapLimit.y, 0.5f * mapLimit.y));
+            position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x),
+                Random.Range(-0.5f * mapLimit.y, 0.5f * mapLimit.y));
         }
-
         return position;
     }
 
@@ -73,5 +70,4 @@ public class AsteroidManager : MonoBehaviour
             GeneraNuevoAsteroide();
         }
     }
-
 }
