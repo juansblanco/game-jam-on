@@ -151,6 +151,10 @@ public class Asteroid : MonoBehaviour
                 asteroid.SetAsteroidSize();
                 Destroy(this);
             }
+            else
+            {
+                asteroid.RandomizeAsteroidSize();
+            }
         }
         else
         {
@@ -159,6 +163,10 @@ public class Asteroid : MonoBehaviour
                 this.aSize++;
                 SetAsteroidSize();
                 Destroy(asteroid.gameObject);
+            }
+            else
+            {
+                RandomizeAsteroidSize();
             }
         }
     }
