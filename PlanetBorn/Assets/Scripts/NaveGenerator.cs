@@ -20,7 +20,10 @@ public class NaveGenerator : MonoBehaviour
     void GeneracionInicial()
     {
         Vector2 position = new Vector2(0,0);
-        Instantiate(nave, position, Quaternion.identity);
+        GameObject nObject = Instantiate(nave, position, Quaternion.identity);
+        AsteroidManager aManager = GetComponent<AsteroidManager>();
+        aManager.SetPlayer(nObject.GetComponentInChildren<PlayerController>().gameObject);
+        aManager.Start();
     }
 
 }
