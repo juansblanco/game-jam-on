@@ -12,7 +12,8 @@ public class Asteroid : MonoBehaviour
     {
         GREEN,
         RED,
-        YELLOW
+        YELLOW,
+        GREY
     }
 
     public enum AsteroidSize
@@ -43,15 +44,19 @@ public class Asteroid : MonoBehaviour
         InitialForce();
     }
 
-    public void RandomizeAsteroid()
+    public void RandomizeAsteroidColor()
     {
         aColor = (AsteroidColor) UnityEngine.Random.Range(0, 3);
         SetColorBasedOnType();
+    }
+
+    public void RandomizeAsteroidSize()
+    {
         aSize = (AsteroidSize) Random.Range(0, 4);
         SetAsteroidSize();
     }
 
-    void SetColorBasedOnType()
+    public void SetColorBasedOnType()
     {
         switch (aColor)
         {
@@ -63,6 +68,9 @@ public class Asteroid : MonoBehaviour
                 break;
             case AsteroidColor.YELLOW:
                 GetComponent<SpriteRenderer>().color = Color.yellow;
+                break;
+            case AsteroidColor.GREY:
+                GetComponent<SpriteRenderer>().color = Color.grey;
                 break;
         }
     }

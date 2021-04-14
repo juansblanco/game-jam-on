@@ -6,7 +6,10 @@ using Random = UnityEngine.Random;
 
 public class AsteroidManager : MonoBehaviour
 {
-    [Header("Numero max de asteroides")] public int maxAsteroides;
+    [Header("Asteroides colores")] public int numGreen;
+    public int numRed;
+    public int numYellow;
+    [Header("Asteroides normales")] public int numNormales;
 
     public GameObject asteroide;
 
@@ -17,9 +20,12 @@ public class AsteroidManager : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-        //GeneracionInicial();
+        GeneracionInicial(numNormales, Asteroid.AsteroidColor.GREY);
+        GeneracionInicial(numGreen, Asteroid.AsteroidColor.GREEN);
+        GeneracionInicial(numRed, Asteroid.AsteroidColor.RED);
+        GeneracionInicial(numYellow, Asteroid.AsteroidColor.YELLOW);
         GetComponent<BoxCollider2D>().size = mapLimit;
     }
 
@@ -33,20 +39,32 @@ public class AsteroidManager : MonoBehaviour
     {
     }
 
-    public void GeneracionInicial()
+    public void GeneracionInicial(int num, Asteroid.AsteroidColor color)
     {
-        for (int i = 0; i < maxAsteroides; i++)
+        for (int i = 0; i < num; i++)
         {
-            GeneraNuevoAsteroide();
+            GeneraNuevoAsteroideColor(color);
         }
+        
     }
 
-    void GeneraNuevoAsteroide()
+    void GeneraNuevoAsteroideColor(Asteroid.AsteroidColor color)
     {
         Vector2 position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x),
             Random.Range(-0.5f * mapLimit.y, 0.5f * mapLimit.y));
         GameObject randomAsteroid = Instantiate(asteroide, position, Quaternion.identity);
-        randomAsteroid.GetComponent<Asteroid>().RandomizeAsteroid();
+        randomAsteroid.GetComponent<Asteroid>().aColor = color;
+        randomAsteroid.GetComponent<Asteroid>().SetColorBasedOnType();
+        randomAsteroid.GetComponent<Asteroid>().RandomizeAsteroidSize();
+    }
+
+    void GeneraNuevoAsteroideRandom()
+    {
+        Vector2 position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x),
+            Random.Range(-0.5f * mapLimit.y, 0.5f * mapLimit.y));
+        GameObject randomAsteroid = Instantiate(asteroide, position, Quaternion.identity);
+        randomAsteroid.GetComponent<Asteroid>().RandomizeAsteroidColor();
+        randomAsteroid.GetComponent<Asteroid>().RandomizeAsteroidSize();
     }
 
     private Vector2 PosicionRandomFueraJugador()
@@ -67,7 +85,7 @@ public class AsteroidManager : MonoBehaviour
         {
             Debug.Log("Nuevo asteroide");
             Destroy(c.gameObject);
-            GeneraNuevoAsteroide();
+            GeneraNuevoAsteroideColor(Asteroid.AsteroidColor.GREY);
         }
     }
 }
