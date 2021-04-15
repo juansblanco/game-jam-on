@@ -84,8 +84,14 @@ public class AsteroidManager : MonoBehaviour
         if (c.gameObject.GetComponent<Asteroid>())
         {
             Debug.Log("Nuevo asteroide");
+            Asteroid.AsteroidColor color = c.gameObject.GetComponent<Asteroid>().aColor;
             Destroy(c.gameObject);
-            GeneraNuevoAsteroideColor(Asteroid.AsteroidColor.GREY);
+            GeneraNuevoAsteroideColor(color);
+        }
+
+        if (c.gameObject.GetComponent<PlayerController>())
+        {
+            c.gameObject.GetComponent<Transform>().position = Vector3.zero;
         }
     }
 }
