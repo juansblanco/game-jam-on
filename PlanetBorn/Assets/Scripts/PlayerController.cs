@@ -31,6 +31,10 @@ public class PlayerController : MonoBehaviour
     public float shieldRegenCooldown;
     public float shieldRegenAmount;
 
+    [Header("Propulsion particles")]
+    public ParticleSystem particleLeft;
+    public ParticleSystem particleRight;
+
     // Private
     private Rigidbody2D body;
     private Vector2 mDir;
@@ -41,6 +45,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         body = gameObject.GetComponent<Rigidbody2D>();
+        particleLeft.Pause();
+        particleRight.Pause();
     }
 
     // Update is called once per frame
