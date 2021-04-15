@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097ef563f06e6b24684b866c4e0a76c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprites: []
   mForce: 100
   mTorque: 5
   aColor: 0
@@ -307,6 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097ef563f06e6b24684b866c4e0a76c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprites: []
   mForce: 100
   mTorque: 5
   aColor: 0
@@ -482,6 +484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097ef563f06e6b24684b866c4e0a76c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprites: []
   mForce: 100
   mTorque: 5
   aColor: 0
@@ -625,6 +628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097ef563f06e6b24684b866c4e0a76c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprites: []
   mForce: 100
   mTorque: 5
   aColor: 0
@@ -763,6 +767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097ef563f06e6b24684b866c4e0a76c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprites: []
   mForce: 100
   mTorque: 5
   aColor: 0
@@ -901,6 +906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097ef563f06e6b24684b866c4e0a76c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprites: []
   mForce: 100
   mTorque: 5
   aColor: 0

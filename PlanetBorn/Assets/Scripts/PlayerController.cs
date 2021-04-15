@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public float forwardForce;
 
     // Adding some range to keep it a bit smooth
-    [Range(1, 2)]
+    [Range(1, 10)]
     public float angularForce;
 
     public float mBoost;
@@ -23,10 +23,19 @@ public class PlayerController : MonoBehaviour
     public ShipRange forceField;
     public Hook hook;
 
+    [Header("Stats")]
+    public float health;
+    public float maxHealth;
+    public float shield;
+    public float maxShield;
+    public float shieldRegenCooldown;
+    public float shieldRegenAmount;
+
     // Private
     private Rigidbody2D body;
     private Vector2 mDir;
     private float mTorque;
+    private float shieldRegenTime;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +51,7 @@ public class PlayerController : MonoBehaviour
             forceField.Push();
         }
 
-        if(Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q))
         {
             forceField.Pull();
         }
@@ -52,7 +61,7 @@ public class PlayerController : MonoBehaviour
             hook.Activate();
         }
 
-        if(mType == MovementType.EVERYDIRECTION)
+        if (mType == MovementType.EVERYDIRECTION)
         {
             EveryDirectionMovementBehaviour();
         }
@@ -61,7 +70,20 @@ public class PlayerController : MonoBehaviour
             ForwardAndRotationMovementBehaviour();
         }
         Boost();
+        ShieldRegeneration();
     } // Update
+
+    private void ShieldRegeneration()
+    {
+        if(shield < maxShield)
+        {
+            shieldRegenTime += Time.deltaTime;
+            if(shieldRegenTime > shieldRegenCooldown)
+            {
+                shield = Mathf.Clamp(shield + shieldRegenAmount, 0, maxShield);
+            }
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -137,9 +159,36 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("collision " + collision.relativeVelocity);
+        //Debug.Log("collision " + collision.relativeVelocity);
         float collisionValue = Math.Abs(collision.relativeVelocity.x) + Math.Abs(collision.relativeVelocity.y);
-        Debug.Log("collision value " + collisionValue);
+        //collisionValue /= 10;
+        collisionValue *= collision.rigidbody.mass;
+        //Debug.Log("collision value " + collisionValue);
+        TakeDamage(collisionValue);
         // Podemos usar esto para calcular los impactos?
+    }
+
+    private void TakeDamage(float collisionValue)
+    {
+        Debug.Log("damage: " + collisionValue + " shield: " + shield + " health: " + health);
+        shieldRegenTime = 0;
+        if(shield > 0)
+        {
+            shield = Mathf.Max(0, shield - collisionValue);
+            if(shield == 0)
+            {
+                // Algo visual para mostrar que el escudo se ha agotado?
+                Debug.Log("Escudo hace piu");
+            }
+        }
+        else
+        {
+            health = Mathf.Max(0, health - collisionValue);
+            if(health == 0)
+            {
+                // Muriose la nave
+                Debug.Log("Nave hace bum");
+            }
+        }
     }
 }

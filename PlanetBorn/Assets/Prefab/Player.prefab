@@ -5499,11 +5499,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardForce: 15
-  angularForce: 2
+  angularForce: 5
   mBoost: 0
   mType: 1
   forceField: {fileID: 1084773552}
   hook: {fileID: 2518502359193112585}
+  health: 100
+  maxHealth: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenCooldown: 5
+  shieldRegenAmount: 0.01
 --- !u!61 &6870982768339625290
 BoxCollider2D:
   m_ObjectHideFlags: 0
