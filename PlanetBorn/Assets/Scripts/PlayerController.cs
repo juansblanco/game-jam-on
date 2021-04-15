@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Mechanics")]
     public ShipRange forceField;
+    public Hook hook;
 
     // Private
     private Rigidbody2D body;
@@ -44,6 +45,11 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKey(KeyCode.Q))
         {
             forceField.Pull();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            hook.Activate();
         }
 
         if(mType == MovementType.EVERYDIRECTION)
