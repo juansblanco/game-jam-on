@@ -69,7 +69,7 @@ public class AsteroidManager : MonoBehaviour
 
     private Vector2 PosicionRandomFueraJugador()
     {
-        Vector2 position = Vector2.zero;
+        Vector2 position;
         do
         {
             position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x),

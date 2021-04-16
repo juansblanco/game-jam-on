@@ -5,26 +5,59 @@ using UnityEngine;
 
 public class AsteroidGravity : MonoBehaviour
 {
-    public float fuerza;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    public Rigidbody2D body;
 
-    // Update is called once per frame
-    void Update()
+    private List<Asteroid> asteroids;
+    private CircleCollider2D gCollider;
+    private void FixedUpdate()
     {
-        
-    }
-
-    private void OnTriggerStay2D(Collider2D c)
-    {
-        if (c.gameObject.GetComponent<Asteroid>())
+        if (asteroids.Count > 0 && gCollider.enabled)
         {
-            Debug.Log("Asteroid entered" + c);
-            //Esto no funciona lol
-            c.gameObject.GetComponent<Rigidbody2D>().AddForce(fuerza*c.transform.position - this.transform.position);
-            //c.transform.position = c.transform.position - asteroid.transform.position;
+            foreach (Asteroid asteroid in asteroids)
+            {
+                if (asteroid != null)
+                {
+                    GravitationalPull(asteroid);
+                }
+            }
         }
+    }
+
+    private void Start()
+    {
+        asteroids = new List<Asteroid>();
+        gCollider = GetComponent<CircleCollider2D>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Asteroid asteroid = collision.GetComponent<Asteroid>();
+        if (asteroid && asteroid.aSize != Asteroid.AsteroidSize.ULTRA_MEGA_BIG)
+        {
+            asteroids.Add(asteroid);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Asteroid asteroid = collision.GetComponent<Asteroid>();
+        if (asteroid && asteroid.aSize != Asteroid.AsteroidSize.ULTRA_MEGA_BIG &&
+            asteroids.Contains(asteroid))
+        {
+            asteroids.Remove(asteroid);
+        }
+    }
+
+    private void GravitationalPull(Asteroid asteroid)
+    {
+        Rigidbody2D aBody = asteroid.GetComponent<Rigidbody2D>();
+
+        Vector2 direction = transform.position - asteroid.transform.position;
+        float distance = direction.magnitude;
+
+        float forceMagnitude = (body.mass * aBody.mass) / Mathf.Pow(distance, 2);
+        Vector2 force = direction.normalized * forceMagnitude;
+
+        aBody.AddForce(force);
     }
 }

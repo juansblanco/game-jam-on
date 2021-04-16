@@ -143,6 +143,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dc0848f284b49534e9761a28cc808715, type: 3}
   mForce: 100
   mTorque: 5
+  initialForce: 1
   aColor: 0
   aSize: 2
   gravity: {fileID: 2766308552274475566}
@@ -210,6 +211,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AsteroidGravity
       objectReference: {fileID: 0}
+    - target: {fileID: 8011975204067637302, guid: 17a0bfa126e612c41902888f0546f873, type: 3}
+      propertyPath: body
+      value: 
+      objectReference: {fileID: 8076499484285625606}
     - target: {fileID: 8096342543684118594, guid: 17a0bfa126e612c41902888f0546f873, type: 3}
       propertyPath: m_RootOrder
       value: 0

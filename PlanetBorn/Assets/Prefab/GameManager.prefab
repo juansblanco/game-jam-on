@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3204314325821557691}
   - component: {fileID: 3204314325821557692}
   - component: {fileID: 3204314325821557690}
+  - component: {fileID: 9140990016290265098}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -45,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c854e8df877c22409243fae9fe65aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nave: {fileID: 6870982766863647611, guid: 51aca4cc31e6bb04fa56202db8706018, type: 3}
+  nave: {fileID: 4917893704932979589, guid: 7e12ba197a66e2f43a0771b214b56b10, type: 3}
 --- !u!114 &3204314325821557692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,3 +93,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 100, y: 100}
   m_EdgeRadius: 0
+--- !u!114 &9140990016290265098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3204314325821557695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d72f918c62135ba458fe47b39b0a0a38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camerasPrefab: {fileID: 1254234764336335088, guid: 2855ce2466acfa742b0f1828db8fdca1, type: 3}

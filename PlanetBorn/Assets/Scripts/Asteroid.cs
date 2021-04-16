@@ -29,22 +29,30 @@ public class Asteroid : MonoBehaviour
 
     [Header("Configure sprites")] public Sprite[] sprites;
 
-    [Header("Movement config")] public float mForce;
+    [Header("Movement config")] 
+    public float mForce;
     public float mTorque;
+    public bool initialForce = true;
 
     [Header("Visual config")] public AsteroidColor aColor;
     public AsteroidSize aSize;
 
+    [Header("Gravity")] 
+    public GameObject gravity;
+
     // Private
     private Rigidbody2D body;
-
-    [Header("Gravity")] public GameObject gravity;
+    private CircleCollider2D gravityCollider;
 
     // Start is called before the first frame update
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        InitialForce();
+        gravityCollider = gravity.GetComponent<CircleCollider2D>();
+        if (initialForce)
+        {
+            InitialForce();
+        }
     }
 
     public void RandomizeAsteroidColor()
@@ -85,28 +93,36 @@ public class Asteroid : MonoBehaviour
     public void SetAsteroidSize()
     {
         Vector3 scale;
+        if(body == null) body = GetComponent<Rigidbody2D>();
         switch (aSize)
         {
             case AsteroidSize.VERY_SMALL:
                 scale = new Vector3(1, 1, transform.localScale.z);
+                body.mass = 0.2f;
                 break;
             case AsteroidSize.SMALL:
                 scale = new Vector3(1.5f, 1.5f, transform.localScale.z);
+                body.mass = 0.6f;
                 break;
             case AsteroidSize.MEDIUM:
                 scale = new Vector3(2, 2, transform.localScale.z);
+                body.mass = 1f;
                 break;
             case AsteroidSize.BIG:
                 scale = new Vector3(3, 3, transform.localScale.z);
+                body.mass = 1.4f;
                 break;
             case AsteroidSize.VERY_BIG:
                 scale = new Vector3(4, 4, transform.localScale.z);
+                body.mass = 1.7f;
                 break;
             case AsteroidSize.ULTRA_BIG:
                 scale = new Vector3(5, 5, transform.localScale.z);
+                body.mass = 2f;
                 break;
             case AsteroidSize.ULTRA_MEGA_BIG:
                 scale = new Vector3(8, 8, transform.localScale.z);
+                body.mass = 2.5f;
                 break;
             default:
                 Debug.Log("Asteroid creation failed");
@@ -115,12 +131,34 @@ public class Asteroid : MonoBehaviour
         }
 
         transform.localScale = scale;
+        ManageGravity();
+    }
+
+    private void ManageGravity()
+    {
+        if(aColor != AsteroidColor.GREY)
+        {
+            if (gravityCollider == null)
+            {
+                gravityCollider = gravity.GetComponent<CircleCollider2D>();
+            }
+
+            if (aSize == AsteroidSize.ULTRA_MEGA_BIG)
+            {
+                Debug.Log("Collider enabled: " + gravityCollider.enabled);
+                gravityCollider.enabled = true;
+            }
+            else
+            {
+                gravityCollider.enabled = false;
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (aSize == AsteroidSize.ULTRA_MEGA_BIG && aColor != AsteroidColor.GREY)
+        /*if (aSize == AsteroidSize.ULTRA_MEGA_BIG && aColor != AsteroidColor.GREY)
         {
             Collider2D c = gravity.GetComponent<Collider2D>();
             Debug.Log("Collider enabled: " + c.enabled);
@@ -129,7 +167,7 @@ public class Asteroid : MonoBehaviour
                 c.enabled = !c.enabled;
                 Debug.Log("Gravity added" + c.gameObject);
             }
-        }
+        }*/
 
         // body.AddForce(new Vector2(1, -1) * mForce);
     }
@@ -161,7 +199,7 @@ public class Asteroid : MonoBehaviour
     void AsteroidFusion(Asteroid asteroid)
     {
         //Debug.Log("puff y se unen: " + asteroid.aSize + " con " + this.aSize);
-        if (asteroid.aSize > this.aSize)
+        if (asteroid.aSize > aSize)
         {
             if (asteroid.aSize < AsteroidSize.ULTRA_MEGA_BIG)
             {
@@ -176,9 +214,9 @@ public class Asteroid : MonoBehaviour
         }
         else
         {
-            if (this.aSize < AsteroidSize.ULTRA_MEGA_BIG)
+            if (aSize < AsteroidSize.ULTRA_MEGA_BIG)
             {
-                this.aSize++;
+                aSize++;
                 SetAsteroidSize();
                 Destroy(asteroid.gameObject);
             }
