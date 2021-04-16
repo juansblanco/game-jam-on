@@ -62,9 +62,9 @@ MonoBehaviour:
   numRed: 40
   numYellow: 60
   numNormales: 20
-  asteroide: {fileID: 1482368637286980136, guid: d95fdc4b6d6598843911a85e9e0eb154, type: 3}
+  asteroide: {fileID: 8076499484285625604, guid: 47c1ebbde220b1d4db3f12c6eecb56ba, type: 3}
   mapLimit: {x: 100, y: 100}
-  player: {fileID: 0}
+  player: {fileID: 4917893704932979589, guid: 7e12ba197a66e2f43a0771b214b56b10, type: 3}
   playerSpawnDistance: 20
 --- !u!61 &3204314325821557690
 BoxCollider2D:
