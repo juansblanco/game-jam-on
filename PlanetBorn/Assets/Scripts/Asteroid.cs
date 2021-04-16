@@ -88,29 +88,29 @@ public class Asteroid : MonoBehaviour
         switch (aSize)
         {
             case AsteroidSize.VERY_SMALL:
-                scale = new Vector3(0.5f, 0.5f, transform.localScale.z);
-                break;
-            case AsteroidSize.SMALL:
-                scale = new Vector3(0.75f, 0.75f, transform.localScale.z);
-                break;
-            case AsteroidSize.MEDIUM:
                 scale = new Vector3(1, 1, transform.localScale.z);
                 break;
-            case AsteroidSize.BIG:
+            case AsteroidSize.SMALL:
                 scale = new Vector3(1.5f, 1.5f, transform.localScale.z);
                 break;
-            case AsteroidSize.VERY_BIG:
+            case AsteroidSize.MEDIUM:
                 scale = new Vector3(2, 2, transform.localScale.z);
                 break;
-            case AsteroidSize.ULTRA_BIG:
+            case AsteroidSize.BIG:
+                scale = new Vector3(3, 3, transform.localScale.z);
+                break;
+            case AsteroidSize.VERY_BIG:
                 scale = new Vector3(4, 4, transform.localScale.z);
                 break;
+            case AsteroidSize.ULTRA_BIG:
+                scale = new Vector3(5, 5, transform.localScale.z);
+                break;
             case AsteroidSize.ULTRA_MEGA_BIG:
-                scale = new Vector3(6, 6, transform.localScale.z);
+                scale = new Vector3(8, 8, transform.localScale.z);
                 break;
             default:
                 Debug.Log("Asteroid creation failed");
-                scale = new Vector3(0, 0, 0);
+                scale = Vector3.zero;
                 break;
         }
 
@@ -127,7 +127,7 @@ public class Asteroid : MonoBehaviour
             if (!c.enabled)
             {
                 c.enabled = !c.enabled;
-                Debug.Log("Gravity added");
+                Debug.Log("Gravity added" + c.gameObject);
             }
         }
 
@@ -167,7 +167,7 @@ public class Asteroid : MonoBehaviour
             {
                 asteroid.aSize++;
                 asteroid.SetAsteroidSize();
-                Destroy(this);
+                Destroy(this.gameObject);
             }
             else if (asteroid.aColor == AsteroidColor.GREY)
             {
