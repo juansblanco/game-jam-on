@@ -50,32 +50,31 @@ public class AsteroidManager : MonoBehaviour
 
     void GeneraNuevoAsteroideColor(Asteroid.AsteroidColor color)
     {
-        Vector2 position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x),
-            Random.Range(-0.5f * mapLimit.y, 0.5f * mapLimit.y));
+        Vector2 position = PosicionRandomFueraJugador();
         GameObject randomAsteroid = Instantiate(asteroide, position, Quaternion.identity);
         randomAsteroid.GetComponent<Asteroid>().aColor = color;
         randomAsteroid.GetComponent<Asteroid>().SetColorBasedOnType();
         randomAsteroid.GetComponent<Asteroid>().RandomizeAsteroidSize();
     }
 
-    void GeneraNuevoAsteroideRandom()
+    void GeneraNuevoAsteroideColorSize(Asteroid.AsteroidColor color, Asteroid.AsteroidSize size)
     {
-        Vector2 position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x),
-            Random.Range(-0.5f * mapLimit.y, 0.5f * mapLimit.y));
+        Vector2 position = PosicionRandomFueraJugador();
         GameObject randomAsteroid = Instantiate(asteroide, position, Quaternion.identity);
-        randomAsteroid.GetComponent<Asteroid>().RandomizeAsteroidColor();
-        randomAsteroid.GetComponent<Asteroid>().RandomizeAsteroidSize();
+        randomAsteroid.GetComponent<Asteroid>().aColor = color;
+        randomAsteroid.GetComponent<Asteroid>().SetColorBasedOnType();
+        randomAsteroid.GetComponent<Asteroid>().aSize = size;
+        randomAsteroid.GetComponent<Asteroid>().SetAsteroidSize();
     }
 
     private Vector2 PosicionRandomFueraJugador()
     {
-        Vector2 position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x),
-            Random.Range(-0.5f * mapLimit.y, 0.5f * mapLimit.y));
-        while (Vector2.Distance(position, player.transform.position) <= playerSpawnDistance)
+        Vector2 position = Vector2.zero;
+        do
         {
             position = new Vector2(Random.Range(-0.5f * mapLimit.x, 0.5f * mapLimit.x),
                 Random.Range(-0.5f * mapLimit.y, 0.5f * mapLimit.y));
-        }
+        } while (Vector2.Distance(position, player.transform.position) <= playerSpawnDistance);
         return position;
     }
 
@@ -85,8 +84,16 @@ public class AsteroidManager : MonoBehaviour
         {
             Debug.Log("Nuevo asteroide");
             Asteroid.AsteroidColor color = c.gameObject.GetComponent<Asteroid>().aColor;
+            Asteroid.AsteroidSize size = c.gameObject.GetComponent<Asteroid>().aSize;
             Destroy(c.gameObject);
-            GeneraNuevoAsteroideColor(color);
+            if (c.gameObject.GetComponent<Asteroid>().aColor != Asteroid.AsteroidColor.GREY)
+            {
+                GeneraNuevoAsteroideColorSize(color, size);
+            }
+            else
+            {
+                GeneraNuevoAsteroideColor(color);
+            }
         }
 
         if (c.gameObject.GetComponent<PlayerController>())

@@ -27,18 +27,18 @@ public class Asteroid : MonoBehaviour
         ULTRA_MEGA_BIG
     }
 
-    [Header("Configure sprites")]
-    public Sprite[] sprites;
+    [Header("Configure sprites")] public Sprite[] sprites;
 
     [Header("Movement config")] public float mForce;
     public float mTorque;
 
-    public AsteroidColor aColor;
-
+    [Header("Visual config")] public AsteroidColor aColor;
     public AsteroidSize aSize;
 
     // Private
     private Rigidbody2D body;
+
+    [Header("Gravity")] public GameObject gravity;
 
     // Start is called before the first frame update
     void Start()
@@ -82,7 +82,7 @@ public class Asteroid : MonoBehaviour
         }
     }
 
-    void SetAsteroidSize()
+    public void SetAsteroidSize()
     {
         Vector3 scale;
         switch (aSize)
@@ -120,6 +120,17 @@ public class Asteroid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (aSize == AsteroidSize.ULTRA_MEGA_BIG && aColor != AsteroidColor.GREY)
+        {
+            Collider2D c = gravity.GetComponent<Collider2D>();
+            Debug.Log("Collider enabled: " + c.enabled);
+            if (!c.enabled)
+            {
+                c.enabled = !c.enabled;
+                Debug.Log("Gravity added");
+            }
+        }
+
         // body.AddForce(new Vector2(1, -1) * mForce);
     }
 
@@ -149,7 +160,7 @@ public class Asteroid : MonoBehaviour
     //Fusiona los asteroides del mismo color que chocan
     void AsteroidFusion(Asteroid asteroid)
     {
-        Debug.Log("puff y se unen: " + asteroid.aSize + " con " + this.aSize);
+        //Debug.Log("puff y se unen: " + asteroid.aSize + " con " + this.aSize);
         if (asteroid.aSize > this.aSize)
         {
             if (asteroid.aSize < AsteroidSize.ULTRA_MEGA_BIG)
@@ -158,7 +169,7 @@ public class Asteroid : MonoBehaviour
                 asteroid.SetAsteroidSize();
                 Destroy(this);
             }
-            else
+            else if (asteroid.aColor == AsteroidColor.GREY)
             {
                 asteroid.RandomizeAsteroidSize();
             }
@@ -171,7 +182,7 @@ public class Asteroid : MonoBehaviour
                 SetAsteroidSize();
                 Destroy(asteroid.gameObject);
             }
-            else
+            else if (asteroid.aColor == AsteroidColor.GREY)
             {
                 RandomizeAsteroidSize();
             }

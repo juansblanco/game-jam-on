@@ -160,7 +160,7 @@ MonoBehaviour:
   numNormales: 50
   asteroide: {fileID: 1482368637286980136, guid: d95fdc4b6d6598843911a85e9e0eb154, type: 3}
   mapLimit: {x: 100, y: 100}
-  player: {fileID: 0}
+  player: {fileID: 6870982766863647611, guid: 51aca4cc31e6bb04fa56202db8706018, type: 3}
   playerSpawnDistance: 20
 --- !u!4 &1012339763
 Transform:
