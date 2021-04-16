@@ -21,8 +21,11 @@ public class NaveGenerator : MonoBehaviour
     {
         Vector2 position = new Vector2(0,0);
         GameObject nObject = Instantiate(nave, position, Quaternion.identity);
+        PlayerController player = nObject.GetComponentInChildren<PlayerController>();
         AsteroidManager aManager = GetComponent<AsteroidManager>();
-        aManager.SetPlayer(nObject.GetComponentInChildren<PlayerController>().gameObject);
+        CameraGenerator cGenerator = GetComponent<CameraGenerator>();
+        cGenerator.SetCameraToFollowPlayer(player);
+        aManager.SetPlayer(player.gameObject);
         aManager.Start();
     }
 
