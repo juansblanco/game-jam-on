@@ -167,7 +167,7 @@ public class Asteroid : MonoBehaviour
             {
                 asteroid.aSize++;
                 asteroid.SetAsteroidSize();
-                Destroy(this);
+                Destroy(gameObject);
             }
             else if (asteroid.aColor == AsteroidColor.GREY)
             {
