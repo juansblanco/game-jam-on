@@ -10076,6 +10076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4329376980f8ac47b00c9107336560b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UI: {fileID: 4548873905425192470, guid: 3e996fb93fa669840bfa6f7142bd1ed9, type: 3}
   forwardForce: 15
   angularForce: 10
   mBoost: 1

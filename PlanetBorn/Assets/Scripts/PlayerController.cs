@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
         FORWARDANDROTATION
     }
 
+    public GameObject UI;
+
     [Header("Movement config")]
     public float forwardForce;
 
@@ -40,6 +42,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 mDir;
     private float mTorque;
     private float shieldRegenTime;
+    private HealthBar healthBar;
+    private ShieldBar shieldBar;
 
     // Particles 
     private Vector2 minMaxEmitter = new Vector2(0, 5);
@@ -51,6 +55,7 @@ public class PlayerController : MonoBehaviour
         body = gameObject.GetComponent<Rigidbody2D>();
         particleLeft.Pause();
         particleRight.Pause();
+        UILoad();
     }
 
     // Update is called once per frame
@@ -93,6 +98,7 @@ public class PlayerController : MonoBehaviour
             if(shieldRegenTime > shieldRegenCooldown)
             {
                 shield = Mathf.Clamp(shield + shieldRegenAmount, 0, maxShield);
+                shieldBar.SetShield(shield);
             }
         }
     }
@@ -213,6 +219,8 @@ public class PlayerController : MonoBehaviour
     private void TakeDamage(float collisionValue)
     {
         Debug.Log("damage: " + collisionValue + " shield: " + shield + " health: " + health);
+        healthBar.SetHealth(health);
+        shieldBar.SetShield(shield);
         shieldRegenTime = 0;
         if(shield > 0)
         {
@@ -232,5 +240,15 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Nave hace bum");
             }
         }
+    }
+
+    private void UILoad()
+    {
+        healthBar = UI.GetComponentInChildren<HealthBar>();
+        healthBar.SetMaxHealth((int)maxHealth);
+        healthBar.SetHealth(maxHealth);
+        shieldBar = UI.GetComponentInChildren<ShieldBar>();
+        shieldBar.SetMaxShield((int)maxShield);
+        shieldBar.SetShield(maxShield);
     }
 }

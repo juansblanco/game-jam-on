@@ -6,6 +6,8 @@ public class NaveGenerator : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject nave;
+
+    public GameObject UI;
     void Start()
     {
         GeneracionInicial();
@@ -24,6 +26,7 @@ public class NaveGenerator : MonoBehaviour
         PlayerController player = nObject.GetComponentInChildren<PlayerController>();
         AsteroidManager aManager = GetComponent<AsteroidManager>();
         CameraGenerator cGenerator = GetComponent<CameraGenerator>();
+        player.UI = UI;
         cGenerator.SetCameraToFollowPlayer(player);
         aManager.SetPlayer(player.gameObject);
         aManager.Start();
