@@ -135,9 +135,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4917893704932979589, guid: 7e12ba197a66e2f43a0771b214b56b10, type: 3}
     - target: {fileID: 3204314325821557692, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
+      propertyPath: numRed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204314325821557692, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
+      propertyPath: numGreen
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204314325821557692, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
       propertyPath: asteroide
       value: 
       objectReference: {fileID: 8076499484285625604, guid: 47c1ebbde220b1d4db3f12c6eecb56ba, type: 3}
+    - target: {fileID: 3204314325821557692, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
+      propertyPath: numYellow
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3204314325821557693, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -408,7 +420,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 0
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -460,9 +472,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 0
-      minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      minMaxState: 2
+      minColor: {r: 1, g: 0.6026776, b: 0.12893075, a: 1}
+      maxColor: {r: 0.28930813, g: 1, b: 0.88332504, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -523,9 +535,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     startSize:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 1
-      minScalar: 1
+      minMaxState: 3
+      scalar: 0.8
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -576,7 +588,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -629,7 +641,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -1105,7 +1117,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 1000
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1223,21 +1235,30 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 0
-          outSlope: 1
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.4994562
+          value: 1
+          inSlope: 0.0244283
+          outSlope: 0.0244283
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.33333334
+          outWeight: 0.21322016
         - serializedVersion: 3
           time: 1
-          value: 1
-          inSlope: 1
-          outSlope: 0
+          value: 0
+          inSlope: -2.2837
+          outSlope: -2.2837
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0.13818671
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -4978,3 +4999,15 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &47253547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47253538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bcb98b6a17231645801bc0815f99a83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
