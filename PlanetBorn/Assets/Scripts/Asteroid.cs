@@ -40,6 +40,8 @@ public class Asteroid : MonoBehaviour
     [Header("Gravity")] 
     public GameObject gravity;
 
+    private bool isPlanet;
+
     // Private
     private Rigidbody2D body;
     private CircleCollider2D gravityCollider;
@@ -53,6 +55,30 @@ public class Asteroid : MonoBehaviour
         {
             InitialForce();
         }
+        isPlanet = false;
+    }
+    
+    void Update()
+    {
+        if (this.aSize == AsteroidSize.ULTRA_MEGA_BIG && this.aColor != AsteroidColor.GREY && !isPlanet)
+        {
+            Debug.Log("Planet complete");
+            this.isPlanet = true;
+            RigidbodyConstraints2D constraints2D = RigidbodyConstraints2D.FreezeAll;
+            this.GetComponent<Rigidbody2D>().constraints = constraints2D;
+        }
+        /*if (aSize == AsteroidSize.ULTRA_MEGA_BIG && aColor != AsteroidColor.GREY)
+        {
+            Collider2D c = gravity.GetComponent<Collider2D>();
+            Debug.Log("Collider enabled: " + c.enabled);
+            if (!c.enabled)
+            {
+                c.enabled = !c.enabled;
+                Debug.Log("Gravity added" + c.gameObject);
+            }
+        }*/
+
+        // body.AddForce(new Vector2(1, -1) * mForce);
     }
 
     public void RandomizeAsteroidColor()
@@ -84,7 +110,7 @@ public class Asteroid : MonoBehaviour
                 GetComponent<SpriteRenderer>().sprite = sprites[3];
                 break;
             case AsteroidColor.GREY:
-                GetComponent<SpriteRenderer>().color = Color.grey;
+                //GetComponent<SpriteRenderer>().color = Color.grey;
                 GetComponent<SpriteRenderer>().sprite = sprites[0];
                 break;
         }
@@ -156,21 +182,7 @@ public class Asteroid : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        /*if (aSize == AsteroidSize.ULTRA_MEGA_BIG && aColor != AsteroidColor.GREY)
-        {
-            Collider2D c = gravity.GetComponent<Collider2D>();
-            Debug.Log("Collider enabled: " + c.enabled);
-            if (!c.enabled)
-            {
-                c.enabled = !c.enabled;
-                Debug.Log("Gravity added" + c.gameObject);
-            }
-        }*/
-
-        // body.AddForce(new Vector2(1, -1) * mForce);
-    }
+   
 
     public void AddForce(Vector2 dir, float force)
     {
