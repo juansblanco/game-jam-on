@@ -26,7 +26,9 @@ public class NaveGenerator : MonoBehaviour
         PlayerController player = nObject.GetComponentInChildren<PlayerController>();
         AsteroidManager aManager = GetComponent<AsteroidManager>();
         CameraGenerator cGenerator = GetComponent<CameraGenerator>();
-        player.UI = UI;
+        GameObject UIObject = Instantiate(UI);
+        player.UI = UIObject;
+        player.UILoad();
         cGenerator.SetCameraToFollowPlayer(player);
         aManager.SetPlayer(player.gameObject);
         aManager.Start();

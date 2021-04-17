@@ -50,7 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c854e8df877c22409243fae9fe65aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nave: {fileID: 4917893704932979589, guid: 7e12ba197a66e2f43a0771b214b56b10, type: 3}
+  nave: {fileID: 5208557140286240614, guid: d704e9cdaf6d761479d4226127284bc8, type: 3}
+  UI: {fileID: 4548873905425192470, guid: 3e996fb93fa669840bfa6f7142bd1ed9, type: 3}
 --- !u!114 &3204314325821557692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,7 +70,7 @@ MonoBehaviour:
   numNormales: 20
   asteroide: {fileID: 8076499484285625604, guid: 47c1ebbde220b1d4db3f12c6eecb56ba, type: 3}
   mapLimit: {x: 100, y: 100}
-  player: {fileID: 4917893704932979589, guid: 7e12ba197a66e2f43a0771b214b56b10, type: 3}
+  player: {fileID: 5208557140286240614, guid: d704e9cdaf6d761479d4226127284bc8, type: 3}
   playerSpawnDistance: 20
 --- !u!61 &3204314325821557690
 BoxCollider2D:

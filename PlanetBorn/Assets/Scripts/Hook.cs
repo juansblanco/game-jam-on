@@ -99,7 +99,10 @@ public class Hook : MonoBehaviour
     {
         Debug.Log("enabled");
         transform.position = startPosition.position;
-        transform.up = player.transform.up;
+        if(player != null)
+        {
+            transform.up = player.transform.up;
+        }
         hookLine.gameObject.SetActive(true);
     }
 

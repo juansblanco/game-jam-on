@@ -55,7 +55,6 @@ public class PlayerController : MonoBehaviour
         body = gameObject.GetComponent<Rigidbody2D>();
         particleLeft.Pause();
         particleRight.Pause();
-        UILoad();
     }
 
     // Update is called once per frame
@@ -219,12 +218,11 @@ public class PlayerController : MonoBehaviour
     private void TakeDamage(float collisionValue)
     {
         Debug.Log("damage: " + collisionValue + " shield: " + shield + " health: " + health);
-        healthBar.SetHealth(health);
-        shieldBar.SetShield(shield);
         shieldRegenTime = 0;
         if(shield > 0)
         {
             shield = Mathf.Max(0, shield - collisionValue);
+            shieldBar.SetShield(shield);
             if(shield == 0)
             {
                 // Algo visual para mostrar que el escudo se ha agotado?
@@ -234,6 +232,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             health = Mathf.Max(0, health - collisionValue);
+            healthBar.SetHealth(health);
             if(health == 0)
             {
                 // Muriose la nave
@@ -242,7 +241,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void UILoad()
+    public void UILoad()
     {
         healthBar = UI.GetComponentInChildren<HealthBar>();
         healthBar.SetMaxHealth((int)maxHealth);
