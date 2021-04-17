@@ -41,6 +41,10 @@ public class PlayerController : MonoBehaviour
     private float mTorque;
     private float shieldRegenTime;
 
+    // Particles 
+    private Vector2 minMaxEmitter = new Vector2(0, 5);
+    private Vector2 minMaxSpeedDesire = new Vector2(0, 7);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -113,13 +117,25 @@ public class PlayerController : MonoBehaviour
 
     private void EveryDirectionMovementBehaviour()
     {
+        int particleToEmit = 0;
+        float speed = body.velocity.magnitude;
+        Debug.Log("Velochita: " + speed);
+        float t = Math.Abs((speed - minMaxSpeedDesire.x) / minMaxSpeedDesire.y);
+        Debug.Log("Valor de t: " + t);
+        particleToEmit = (int)Mathf.Lerp(minMaxEmitter.x, minMaxEmitter.y, t);
+
         if (Input.GetKey(KeyCode.W))
         {
+            Debug.Log(particleToEmit);
+            particleLeft.Emit(particleToEmit);
+            particleRight.Emit(particleToEmit);
             mDir.y = 1;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
+            particleRight.Emit(particleToEmit + 2);
+            particleLeft.Emit(particleToEmit - 1);
             mDir.x = -1;
         }
 
@@ -130,17 +146,32 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
+            particleLeft.Emit(particleToEmit + 2);
+            particleRight.Emit(particleToEmit - 1);
             mDir.x = 1;
         }
     }
     private void ForwardAndRotationMovementBehaviour()
     {
+        int particleToEmit = 0;
+        float speed = body.velocity.magnitude;
+        Debug.Log("Velochita: " + speed);
+        float t = (speed - minMaxSpeedDesire.x) / (minMaxSpeedDesire.y);
+        Debug.Log("Valor de t: " + t);
+        particleToEmit = (int)Mathf.Lerp(minMaxEmitter.x, minMaxEmitter.y, t);
+
         if (Input.GetKey(KeyCode.W))
         {
+            Debug.Log("Emitter value uwu: " + particleToEmit);
+            particleLeft.Emit(particleToEmit);
+            particleRight.Emit(particleToEmit);
             mDir = transform.up;
         }
         if (Input.GetKey(KeyCode.A))
         {
+            Debug.Log("Emitter value uwu: " + particleToEmit);
+            particleRight.Emit(particleToEmit + 2);
+            particleLeft.Emit(particleToEmit - 1);
             mTorque = 1;
         }
         if (Input.GetKey(KeyCode.S))
@@ -149,6 +180,9 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D))
         {
+            Debug.Log("Emitter value uwu: " + particleToEmit);
+            particleLeft.Emit(particleToEmit + 2);
+            particleRight.Emit(particleToEmit - 1);
             mTorque = -1;
         }
     }
