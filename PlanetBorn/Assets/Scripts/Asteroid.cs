@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro.EditorUtilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Cinemachine;
 
 
 public class Asteroid : MonoBehaviour
@@ -124,31 +125,31 @@ public class Asteroid : MonoBehaviour
         {
             case AsteroidSize.VERY_SMALL:
                 scale = new Vector3(1, 1, transform.localScale.z);
-                body.mass = 0.2f;
+                body.mass = 1f;
                 break;
             case AsteroidSize.SMALL:
                 scale = new Vector3(1.5f, 1.5f, transform.localScale.z);
-                body.mass = 0.6f;
+                body.mass = 1.3f;
                 break;
             case AsteroidSize.MEDIUM:
                 scale = new Vector3(2, 2, transform.localScale.z);
-                body.mass = 1f;
+                body.mass = 1.6f;
                 break;
             case AsteroidSize.BIG:
                 scale = new Vector3(3, 3, transform.localScale.z);
-                body.mass = 1.4f;
+                body.mass = 2f;
                 break;
             case AsteroidSize.VERY_BIG:
                 scale = new Vector3(4, 4, transform.localScale.z);
-                body.mass = 1.7f;
+                body.mass = 2.3f;
                 break;
             case AsteroidSize.ULTRA_BIG:
                 scale = new Vector3(5, 5, transform.localScale.z);
-                body.mass = 2f;
+                body.mass = 2.6f;
                 break;
             case AsteroidSize.ULTRA_MEGA_BIG:
                 scale = new Vector3(8, 8, transform.localScale.z);
-                body.mass = 2.5f;
+                body.mass = 3f;
                 break;
             default:
                 Debug.Log("Asteroid creation failed");
@@ -205,6 +206,12 @@ public class Asteroid : MonoBehaviour
         if (asteroid &&
             asteroid.aColor == aColor)
             AsteroidFusion(asteroid);
+        else if (collision.gameObject.GetComponent<PlayerController>() &&
+            collision.otherCollider.GetComponent<Asteroid>())
+        {
+            Debug.Log("impulse");
+            GetComponent<CinemachineImpulseSource>().GenerateImpulse(3f * body.mass);
+        }
     }
 
     //Fusiona los asteroides del mismo color que chocan

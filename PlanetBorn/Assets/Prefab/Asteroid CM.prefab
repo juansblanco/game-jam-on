@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8076499484285625606}
   - component: {fileID: 8076499484285625608}
   - component: {fileID: 8076499484285625611}
-  - component: {fileID: 7243779513378394690}
+  - component: {fileID: 2142054221789300331}
   m_Layer: 0
   m_Name: Asteroid CM
   m_TagString: Asteroid
@@ -147,7 +147,7 @@ MonoBehaviour:
   aColor: 0
   aSize: 2
   gravity: {fileID: 2766308552274475566}
---- !u!114 &7243779513378394690
+--- !u!114 &2142054221789300331
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,7 +156,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8076499484285625604}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd438dd108a0f284aa931a2da434f1d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
