@@ -9,15 +9,14 @@ public class Hook : MonoBehaviour
     public float minDistance = 1.5f;
     public float speed = 10f;
     public float releaseForce = 100f;
+    public Transform startPosition;
 
     public LineRenderer hookLine;
 
     private bool isActive;
     private bool returnToShip;
 
-    private Rigidbody2D body;
     private BoxCollider2D boxCollider;
-    private Vector2 startPosition;
     private GameObject player;
     private DistanceJoint2D joint;
     private Asteroid attachedAsteroid;
@@ -27,15 +26,14 @@ public class Hook : MonoBehaviour
     {
         isActive = false;
         returnToShip = false;
-        body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         joint = GetComponent<DistanceJoint2D>();
         joint.enabled = false;
-        startPosition = transform.localPosition;
         boxCollider.enabled = false;
         player = GameObject.FindWithTag("Player");
         attachedAsteroid = null;
         //hookLine.enabled = false;
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -47,7 +45,7 @@ public class Hook : MonoBehaviour
         {
             if (!returnToShip)
             {
-                if(Vector2.Distance(transform.localPosition, startPosition) < maxDistance)
+                if(Vector2.Distance(transform.position, startPosition.position) < maxDistance)
                 {
                     MoveForward();
                 }
@@ -58,16 +56,21 @@ public class Hook : MonoBehaviour
             }
             else
             {
-                if (Vector2.Distance(transform.localPosition, startPosition) > minDistance)
+                if (Vector2.Distance(transform.position, player.transform.position) > minDistance)
                 {
                     ReturnToShip();
                 }
                 else
                 {
-                    if(attachedAsteroid == null) transform.localPosition = startPosition;
-                    isActive = false;
-                    returnToShip = false;
-                    boxCollider.enabled = false;
+                    if (attachedAsteroid == null)
+                    {
+                        transform.position = startPosition.position;
+                        isActive = false;
+                        returnToShip = false;
+                        boxCollider.enabled = false;
+                        gameObject.SetActive(false);
+                    }
+
                     //hookLine.enabled = false;
                 }
             }
@@ -87,10 +90,24 @@ public class Hook : MonoBehaviour
                     if (joint.connectedBody != null) joint.connectedBody.AddForce(transform.up * releaseForce);
                     if (attachedAsteroid != null) attachedAsteroid = null;
                     joint.enabled = false;
-                    transform.localPosition = startPosition;
+                    transform.position = startPosition.position;
                 }
             }
         }
+    }
+    private void OnEnable()
+    {
+        Debug.Log("enabled");
+        transform.position = startPosition.position;
+        transform.up = player.transform.up;
+        hookLine.gameObject.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("disabled");
+        hookLine.gameObject.SetActive(false);
+        joint.enabled = false;
     }
 
     private void UpdateLine()
@@ -101,11 +118,8 @@ public class Hook : MonoBehaviour
 
     private void ReturnToShip()
     {
-        Vector3 direction = ((Vector3)startPosition - transform.localPosition).normalized;
+        Vector3 direction = (player.transform.position - transform.position).normalized;
         transform.localPosition += direction * speed * Time.deltaTime;
-        //transform.Translate(player.transform.position);
-        //body.MovePosition(player.transform.position);
-        //Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
     }
 
     private void MoveForward()
@@ -116,18 +130,18 @@ public class Hook : MonoBehaviour
 
     internal void Activate()
     {
-        if (joint.enabled)
+        if (joint != null && joint.enabled)
         {
-            if(joint.connectedBody != null) joint.connectedBody.AddForce(transform.up * releaseForce);
+            //if(joint.connectedBody != null) joint.connectedBody.AddForce(transform.up * releaseForce);
             if (attachedAsteroid != null) attachedAsteroid = null;
             joint.enabled = false;
-            transform.localPosition = startPosition;
+            transform.position = startPosition.position;
         }
         else
         {
             isActive = true;
             boxCollider.enabled = true;
-            //hookLine.enabled = true;
+            hookLine.enabled = true;
         }
         //Move();
     }

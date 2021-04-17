@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
+            Debug.Log("hook " + hook);
+            hook.gameObject.SetActive(true);
             hook.Activate();
         }
 
@@ -155,21 +157,21 @@ public class PlayerController : MonoBehaviour
     {
         int particleToEmit = 0;
         float speed = body.velocity.magnitude;
-        Debug.Log("Velochita: " + speed);
+        //Debug.Log("Velochita: " + speed);
         float t = (speed - minMaxSpeedDesire.x) / (minMaxSpeedDesire.y);
-        Debug.Log("Valor de t: " + t);
+        //Debug.Log("Valor de t: " + t);
         particleToEmit = (int)Mathf.Lerp(minMaxEmitter.x, minMaxEmitter.y, t);
 
         if (Input.GetKey(KeyCode.W))
         {
-            Debug.Log("Emitter value uwu: " + particleToEmit);
+            //Debug.Log("Emitter value uwu: " + particleToEmit);
             particleLeft.Emit(particleToEmit);
             particleRight.Emit(particleToEmit);
             mDir = transform.up;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            Debug.Log("Emitter value uwu: " + particleToEmit);
+            //Debug.Log("Emitter value uwu: " + particleToEmit);
             particleRight.Emit(particleToEmit + 2);
             particleLeft.Emit(particleToEmit - 1);
             mTorque = 1;
@@ -180,7 +182,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D))
         {
-            Debug.Log("Emitter value uwu: " + particleToEmit);
+            //Debug.Log("Emitter value uwu: " + particleToEmit);
             particleLeft.Emit(particleToEmit + 2);
             particleRight.Emit(particleToEmit - 1);
             mTorque = -1;
