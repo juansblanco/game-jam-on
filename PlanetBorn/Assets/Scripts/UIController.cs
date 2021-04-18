@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour
     public GameObject loseWindow;
     public GameObject winWindow;
     public GameObject pauseWindow;
+    public GameObject HUDWindow;
 
     public LevelLoader levelLoader;
 
@@ -47,8 +48,9 @@ public class UIController : MonoBehaviour
         loseWindow.SetActive(true);
     }
 
-    public void ShowWinWindow()
+    public void ShowWinWindow(float score)
     {
+        winWindow.GetComponent<InputField>().text = score.ToString();
         Time.timeScale = 0;
         gameOver = true;
         winWindow.SetActive(true);
@@ -66,6 +68,11 @@ public class UIController : MonoBehaviour
         isPaused = !isPaused;
         Time.timeScale = 1;
         pauseWindow.SetActive(false);
+    }
+
+    public void HideHUDWindow()
+    {
+        HUDWindow.SetActive(false);
     }
 
     public void RetryGame()
