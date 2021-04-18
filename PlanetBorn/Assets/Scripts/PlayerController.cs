@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +11,10 @@ public class PlayerController : MonoBehaviour
     }
 
     public GameObject UI;
+
+    [Header("Death")]
+    public float slowMotionScale;
+    public float deathTimeToWait;
 
     [Header("Movement config")]
     public float forwardForce;
@@ -39,15 +44,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("Timers")]
     public float hookCooldown = 10f;
-    public float barrierCooldown = 10f;
     public float pushCooldown = 2f;
     public float pullCooldown = 2f;
+    public float barrierCD = 10f;
 
-    public float barrierCD = 10;
-
-    [Header("Propulsion particles")]
-    public ParticleSystem particleLeft;
-    public ParticleSystem particleRight;
+    [Header("Particles")]
+    public ParticleSystem leftPropulsor;
+    public ParticleSystem rightPropulsor;
+    public GameObject explosion;
 
     // Private
     private Rigidbody2D body;
@@ -62,37 +66,44 @@ public class PlayerController : MonoBehaviour
     private float pullCharge;
     private HealthBar healthBar;
     private ShieldBar shieldBar;
+    private bool canMove;
 
     // Particles 
     private Vector2 minMaxEmitter = new Vector2(0, 5);
     private Vector2 minMaxSpeedDesire = new Vector2(0, 7);
 
+    public bool CanMove { get => canMove; set => canMove = value; }
+
     // Start is called before the first frame update
     void Start()
     {
         body = gameObject.GetComponent<Rigidbody2D>();
-        particleLeft.Pause();
-        particleRight.Pause();
+        leftPropulsor.Pause();
+        rightPropulsor.Pause();
         pushCharge = pushChargeMax;
         pullCharge = pullChargeMax;
+        canMove = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ManageTimers();
-        ManageAbilities();
-
-        if (mType == MovementType.EVERYDIRECTION)
+        if (canMove)
         {
-            EveryDirectionMovementBehaviour();
+            ManageAbilities();
+            if (mType == MovementType.EVERYDIRECTION)
+            {
+                EveryDirectionMovementBehaviour();
+            }
+            else
+            {
+                ForwardAndRotationMovementBehaviour();
+            }
+            Boost();
         }
-        else
-        {
-            ForwardAndRotationMovementBehaviour();
-        }
-        Boost();
         ShieldRegeneration();
+        AbilitiesRegeneration();
+        ManageTimers();
     } // Update
 
     private void ManageAbilities()
@@ -149,10 +160,9 @@ public class PlayerController : MonoBehaviour
             }
             //Debug.Log("BarreraCD " + barrierCDTimer);
         }
-        RechargeAbilities();
     }
 
-    private void RechargeAbilities()
+    private void AbilitiesRegeneration()
     {
         //Debug.Log("push charge: " + pushCharge + " pull charge: " + pullCharge);
         if(pullCharge < pullChargeMax && pullTimer == 0)
@@ -218,15 +228,15 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             Debug.Log(particleToEmit);
-            particleLeft.Emit(particleToEmit);
-            particleRight.Emit(particleToEmit);
+            leftPropulsor.Emit(particleToEmit);
+            rightPropulsor.Emit(particleToEmit);
             mDir.y = 1;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            particleRight.Emit(particleToEmit + 2);
-            particleLeft.Emit(particleToEmit - 1);
+            rightPropulsor.Emit(particleToEmit + 2);
+            leftPropulsor.Emit(particleToEmit - 1);
             mDir.x = -1;
         }
 
@@ -237,8 +247,8 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
-            particleLeft.Emit(particleToEmit + 2);
-            particleRight.Emit(particleToEmit - 1);
+            leftPropulsor.Emit(particleToEmit + 2);
+            rightPropulsor.Emit(particleToEmit - 1);
             mDir.x = 1;
         }
     }
@@ -254,15 +264,15 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             //Debug.Log("Emitter value uwu: " + particleToEmit);
-            particleLeft.Emit(particleToEmit);
-            particleRight.Emit(particleToEmit);
+            leftPropulsor.Emit(particleToEmit);
+            rightPropulsor.Emit(particleToEmit);
             mDir = transform.up;
         }
         if (Input.GetKey(KeyCode.A))
         {
             //Debug.Log("Emitter value uwu: " + particleToEmit);
-            particleRight.Emit(particleToEmit + 2);
-            particleLeft.Emit(particleToEmit - 1);
+            rightPropulsor.Emit(particleToEmit + 2);
+            leftPropulsor.Emit(particleToEmit - 1);
             mTorque = 1;
         }
         if (Input.GetKey(KeyCode.S))
@@ -272,8 +282,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             //Debug.Log("Emitter value uwu: " + particleToEmit);
-            particleLeft.Emit(particleToEmit + 2);
-            particleRight.Emit(particleToEmit - 1);
+            leftPropulsor.Emit(particleToEmit + 2);
+            rightPropulsor.Emit(particleToEmit - 1);
             mTorque = -1;
         }
     }
@@ -339,8 +349,26 @@ public class PlayerController : MonoBehaviour
             {
                 // Muriose la nave
                 Debug.Log("Nave hace bum");
+                Death();
             }
         }
+    }
+
+    private void Death()
+    {
+        canMove = false;
+        Time.timeScale = slowMotionScale;
+        GetComponentInChildren<SpriteRenderer>().color = new Color(0.2169811f, 0.2169811f, 0.2169811f);
+        Instantiate(explosion, transform.position, Quaternion.identity);
+        StartCoroutine(LoseGame());
+    }
+
+    IEnumerator LoseGame()
+    {
+        yield return new WaitForSeconds(deathTimeToWait);
+        Time.timeScale = 1;
+        Debug.Log("game over");
+        Destroy(gameObject);
     }
 
     public void UILoad()

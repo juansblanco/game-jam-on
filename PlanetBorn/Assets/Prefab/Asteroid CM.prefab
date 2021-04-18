@@ -148,10 +148,12 @@ MonoBehaviour:
   mForce: 100
   mTorque: 5
   initialForce: 1
+  maxAngularVelocity: 50
+  maxRotation: 50
   aColor: 0
   aSize: 2
   gravity: {fileID: 2766308552274475566}
-  manager: {fileID: 3204314325821557692, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
+  planetPrefab: {fileID: 2605142712668930935, guid: a69b11873d7d3e747b71cd88a3abac5a, type: 3}
 --- !u!114 &2142054221789300331
 MonoBehaviour:
   m_ObjectHideFlags: 0

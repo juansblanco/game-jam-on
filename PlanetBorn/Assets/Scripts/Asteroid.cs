@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Cinemachine;
@@ -35,14 +34,18 @@ public class Asteroid : MonoBehaviour
     public float mForce;
     public float mTorque;
     public bool initialForce = true;
+    public float maxAngularVelocity;
+    public float maxRotation;
 
-    [Header("Visual config")] public AsteroidColor aColor;
+    [Header("Visual config")] 
+    public AsteroidColor aColor;
     public AsteroidSize aSize;
 
     [Header("Gravity")] 
     public GameObject gravity;
 
-    private bool isPlanet;
+    [Header("Prefabs")]
+    public Planet planetPrefab;
 
     // Private
     private Rigidbody2D body;
@@ -57,36 +60,19 @@ public class Asteroid : MonoBehaviour
         {
             InitialForce();
         }
-        isPlanet = false;
     }
     
-    void Update()
+    void FixedUpdate()
     {
-        CheckPlanet();
-        /*if (aSize == AsteroidSize.ULTRA_MEGA_BIG && aColor != AsteroidColor.GREY)
-        {
-            Collider2D c = gravity.GetComponent<Collider2D>();
-            Debug.Log("Collider enabled: " + c.enabled);
-            if (!c.enabled)
-            {
-                c.enabled = !c.enabled;
-                Debug.Log("Gravity added" + c.gameObject);
-            }
-        }*/
-
-        // body.AddForce(new Vector2(1, -1) * mForce);
+        CheckSpeed();
     }
 
-    void CheckPlanet()
+    private void CheckSpeed()
     {
-        if (this.aSize == AsteroidSize.ULTRA_MEGA_BIG && this.aColor != AsteroidColor.BROWN && !isPlanet)
-        {
-            Debug.Log("Planet complete");
-            this.isPlanet = true;
-            RigidbodyConstraints2D constraints2D = RigidbodyConstraints2D.FreezeAll;
-            this.GetComponent<Rigidbody2D>().constraints = constraints2D;
-        }
+        body.angularVelocity = Mathf.Clamp(body.angularVelocity, -maxAngularVelocity, maxAngularVelocity);
+        //body.velocity = Mathf.Max(body.velocity, maxVelocity); need to think about this
     }
+
     public void RandomizeAsteroidColor()
     {
         aColor = (AsteroidColor) UnityEngine.Random.Range(0, 3);
@@ -240,12 +226,32 @@ public class Asteroid : MonoBehaviour
                 Destroy(asteroid.gameObject);  
             }
         }
+        else if(asteroid && asteroid.aSize == AsteroidSize.ULTRA_MEGA_BIG
+            && aSize == AsteroidSize.ULTRA_MEGA_BIG && asteroid.aColor != aColor
+            && (aColor == AsteroidColor.BLUE || aColor == AsteroidColor.GREEN)
+            && (asteroid.aColor == AsteroidColor.BLUE || asteroid.aColor == AsteroidColor.GREEN)){
+            if(aColor == AsteroidColor.BLUE)
+            {
+                Debug.Log("destroying blue");
+                Destroy(gameObject);
+            }
+            else
+            {
+                UpgradeToPlanet();
+            }
+        }
         else if (collision.gameObject.GetComponent<PlayerController>() &&
                  collision.otherCollider.GetComponent<Asteroid>())
         {
             Debug.Log("impulse");
             GetComponent<CinemachineImpulseSource>().GenerateImpulse(3f * body.mass);
         }
+    }
+    void UpgradeToPlanet()
+    {
+        Debug.Log("upgrading to planet");
+        Planet planet = Instantiate(planetPrefab, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 
     //Fusiona los asteroides del mismo color que chocan
