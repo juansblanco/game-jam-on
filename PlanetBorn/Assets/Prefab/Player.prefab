@@ -10030,7 +10030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UI: {fileID: 4548873905425192470, guid: 3e996fb93fa669840bfa6f7142bd1ed9, type: 3}
   forwardForce: 15
-  angularForce: 10
+  angularForce: 20
   mBoost: 1
   mType: 1
   forceField: {fileID: 1662427990778224813}
@@ -10042,6 +10042,13 @@ MonoBehaviour:
   maxShield: 50
   shieldRegenCooldown: 5
   shieldRegenAmount: 0.01
+  pushChargeMax: 50
+  pullChargeMax: 50
+  abilityModFactor: 20
+  hookCooldown: 10
+  barrierCooldown: 10
+  pushCooldown: 2
+  pullCooldown: 2
   particleLeft: {fileID: 4728021224202760631}
   particleRight: {fileID: 8738104467192439860}
 --- !u!61 &5208557138810392919
@@ -10205,7 +10212,8 @@ MonoBehaviour:
   maxDistance: 10
   minDistance: 3
   speed: 20
-  releaseForce: 100
+  timer: 1
+  maxHookedTime: 10
   startPosition: {fileID: 898289299389013962}
   hookLine: {fileID: 1760113095467072097}
 --- !u!50 &5393522137863837642
