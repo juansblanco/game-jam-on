@@ -43,6 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f6e87cb778b5954291494b6b7e48163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 2870953111307307347, guid: c9e5e7bca920c0b47982f7f2069a9ecf, type: 3}
+  - {fileID: -5575491584031077287, guid: c9e5e7bca920c0b47982f7f2069a9ecf, type: 3}
   volumeSlider: {fileID: 0}
+  icon: {fileID: 0}
   defaultVolume: 0.8
   musicPlayer: {fileID: 0}

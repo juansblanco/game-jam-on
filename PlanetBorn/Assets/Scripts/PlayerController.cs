@@ -383,6 +383,12 @@ public class PlayerController : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public IEnumerator WinGame()
+    {
+        yield return new WaitForSeconds(deathTimeToWait);
+        UI.GetComponentInChildren<UIController>().ShowWinWindow();
+    }
+
     public void UILoad()
     {
 
