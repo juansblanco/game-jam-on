@@ -64,8 +64,11 @@ public class PlayerController : MonoBehaviour
     private float barrierCDTimer = 0;
     private float pushCharge;
     private float pullCharge;
-    private HealthBar healthBar;
-    private ShieldBar shieldBar;
+    private BarController healthBar;
+    private BarController shieldBar;
+    private BarController pushBar;
+    private BarController pullBar;
+    private BarController hookBar;
     private bool canMove;
 
     // Particles 
@@ -115,6 +118,7 @@ public class PlayerController : MonoBehaviour
             {
                 forceField.Push();
                 pushCharge = Mathf.Max(0, pushCharge - (abilityModFactor * Time.deltaTime));
+                pushBar.SetValue(pushCharge);
                 pushTimer = pushCooldown;
             }
         }
@@ -126,6 +130,7 @@ public class PlayerController : MonoBehaviour
             {
                 forceField.Pull();
                 pullCharge = Mathf.Max(0, pullCharge - (abilityModFactor * Time.deltaTime));
+                pullBar.SetValue(pullCharge);
                 pullTimer = pullCooldown;
             }
         }
@@ -141,6 +146,7 @@ public class PlayerController : MonoBehaviour
                 }
                 hook.Activate();
                 hookTimer = hookCooldown;
+                hookBar.SetValue(hookCooldown-hookTimer);
             }
             Debug.Log("hookTimer " + hookTimer);
         }
@@ -168,16 +174,19 @@ public class PlayerController : MonoBehaviour
         if(pullCharge < pullChargeMax && pullTimer == 0)
         {
             pullCharge = Mathf.Min(pullChargeMax, pullCharge + (abilityModFactor * Time.deltaTime));
+            pullBar.SetValue(pullCharge);
         }       
         if (pushCharge < pushChargeMax && pushTimer == 0)
         {
             pushCharge = Mathf.Min(pushChargeMax, pushCharge + (abilityModFactor * Time.deltaTime));
+            pushBar.SetValue(pushCharge);
         }
     }
 
     private void ManageTimers()
     {
         hookTimer = Mathf.Max(0, hookTimer - Time.deltaTime);
+        hookBar.SetValue(hookCooldown-hookTimer);
         pushTimer = Mathf.Max(0, pushTimer - Time.deltaTime);
         pullTimer = Mathf.Max(0, pullTimer - Time.deltaTime);
         barrierCDTimer = Mathf.Max(0, barrierCDTimer - Time.deltaTime);
@@ -191,7 +200,7 @@ public class PlayerController : MonoBehaviour
             if(shieldRegenTimer > shieldRegenCooldown)
             {
                 shield = Mathf.Clamp(shield + shieldRegenAmount, 0, maxShield);
-                shieldBar.SetShield(shield);
+                shieldBar.SetValue(shield);
             }
         }
     }
@@ -334,7 +343,7 @@ public class PlayerController : MonoBehaviour
         if(shield > 0)
         {
             shield = Mathf.Max(0, shield - collisionValue);
-            shieldBar.SetShield(shield);
+            shieldBar.SetValue(shield);
             if(shield == 0)
             {
                 // Algo visual para mostrar que el escudo se ha agotado?
@@ -344,7 +353,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             health = Mathf.Max(0, health - collisionValue);
-            healthBar.SetHealth(health);
+            healthBar.SetValue(health);
             if(health == 0)
             {
                 // Muriose la nave
@@ -373,12 +382,45 @@ public class PlayerController : MonoBehaviour
 
     public void UILoad()
     {
-        healthBar = UI.GetComponentInChildren<HealthBar>();
-        healthBar.SetMaxHealth((int)maxHealth);
-        healthBar.SetHealth(maxHealth);
-        shieldBar = UI.GetComponentInChildren<ShieldBar>();
-        shieldBar.SetMaxShield((int)maxShield);
-        shieldBar.SetShield(maxShield);
+        int x = UI.transform.childCount;
+        for (int i = 0; i<x; i++)
+        {
+            BarController bar = UI.transform.GetChild(i).gameObject.GetComponent<BarController>();
+            if (bar.getType() == BarController.BarType.HEALTH)
+            {
+                healthBar = bar;
+                healthBar.SetMaxValue((int)maxHealth);
+                healthBar.SetValue(maxHealth);
+                Debug.Log("isHealth");
+            }
+            if (bar.getType() == BarController.BarType.SHIELD)
+            {
+                shieldBar = bar;
+                shieldBar.SetMaxValue((int)maxShield);
+                shieldBar.SetValue(maxShield);
+                Debug.Log("isShield");
+            }
+            if (bar.getType() == BarController.BarType.PUSH)
+            {
+                pushBar = bar;
+                pushBar.SetMaxValue((int)pushChargeMax);
+                pushBar.SetValue(pushChargeMax);
+                Debug.Log("isPush");
+            }
+            if (bar.getType() == BarController.BarType.PULL)
+            {
+                pullBar = bar;
+                pullBar.SetMaxValue((int)pullChargeMax);
+                pullBar.SetValue(pullChargeMax);
+            }
+            if (bar.getType() == BarController.BarType.HOOK)
+            {
+                hookBar = bar;
+                hookBar.SetMaxValue((int)hookCooldown);
+                hookBar.SetValue(hookCooldown);
+            }
+        }
+        
     }
 
     public void SetHookTimer()
