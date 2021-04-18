@@ -1,10 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour
 {
     AudioSource audioSource;
+
+    [Header("Audio clips")]
+    public AudioClip main;
+    public AudioClip game;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +23,26 @@ public class MusicPlayer : MonoBehaviour
             audioSource.volume = 0.8f;
             PlayerPrefsController.SetMasterVolume(0.8f);
         }
+
+        audioSource.clip = main;
+        audioSource.pitch = 1.0f;
+        audioSource.Play();
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        audioSource.Stop();
+        if(level == 1)
+        {
+            audioSource.clip = game;
+            audioSource.pitch = 1.0f;
+        }
+        else if (level == 0)
+        {
+            audioSource.clip = main;
+            audioSource.pitch = 1.0f;
+        }
+        audioSource.Play();
     }
 
     private void SetUpSingleton()
