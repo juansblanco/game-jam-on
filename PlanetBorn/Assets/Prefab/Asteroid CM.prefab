@@ -189,13 +189,6 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 1000
     m_PropagationSpeed: 343
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 12
-  m_IgnoreTag: 
-  m_UseImpactDirection: 1
-  m_ScaleImpactWithMass: 1
-  m_ScaleImpactWithSpeed: 1
 --- !u!1001 &5745610113731211349
 PrefabInstance:
   m_ObjectHideFlags: 0

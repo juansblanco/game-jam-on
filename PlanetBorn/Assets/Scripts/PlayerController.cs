@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     public float shieldRegenCooldown;
     public float shieldRegenAmount;
 
+    [Header("Timers")]
+    public float hookCooldown = 10f;
+
     [Header("Propulsion particles")]
     public ParticleSystem particleLeft;
     public ParticleSystem particleRight;
@@ -41,7 +44,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D body;
     private Vector2 mDir;
     private float mTorque;
-    private float shieldRegenTime;
+    private float shieldRegenTimer;
+    private float hookTimer = 0;
     private HealthBar healthBar;
     private ShieldBar shieldBar;
 
@@ -60,6 +64,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        hookTimer = Mathf.Max(0, hookTimer - Time.deltaTime);
         if (Input.GetKey(KeyCode.E)) // Empujar
         {
             forceField.Push();
@@ -72,9 +77,17 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Debug.Log("hook " + hook);
-            hook.gameObject.SetActive(true);
-            hook.Activate();
+            if(hookTimer == 0 || hook.gameObject.activeSelf)
+            {
+                Debug.Log("hook " + hook);
+                if (!hook.gameObject.activeSelf)
+                {
+                    hook.gameObject.SetActive(true);
+                }
+                hook.Activate();
+                hookTimer = hookCooldown;
+            }
+            Debug.Log("hookTimer " + hookTimer);
         }
 
         if (mType == MovementType.EVERYDIRECTION)
@@ -93,8 +106,8 @@ public class PlayerController : MonoBehaviour
     {
         if(shield < maxShield)
         {
-            shieldRegenTime += Time.deltaTime;
-            if(shieldRegenTime > shieldRegenCooldown)
+            shieldRegenTimer += Time.deltaTime;
+            if(shieldRegenTimer > shieldRegenCooldown)
             {
                 shield = Mathf.Clamp(shield + shieldRegenAmount, 0, maxShield);
                 shieldBar.SetShield(shield);
@@ -218,7 +231,7 @@ public class PlayerController : MonoBehaviour
     private void TakeDamage(float collisionValue)
     {
         Debug.Log("damage: " + collisionValue + " shield: " + shield + " health: " + health);
-        shieldRegenTime = 0;
+        shieldRegenTimer = 0;
         if(shield > 0)
         {
             shield = Mathf.Max(0, shield - collisionValue);
@@ -249,5 +262,15 @@ public class PlayerController : MonoBehaviour
         shieldBar = UI.GetComponentInChildren<ShieldBar>();
         shieldBar.SetMaxShield((int)maxShield);
         shieldBar.SetShield(maxShield);
+    }
+
+    public void SetHookTimer()
+    {
+        hookTimer = hookCooldown;
+    }
+
+    public void ResetHookTimer()
+    {
+        hookTimer = 0;
     }
 }

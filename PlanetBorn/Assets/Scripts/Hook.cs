@@ -5,16 +5,24 @@ using UnityEngine;
 
 public class Hook : MonoBehaviour
 {
+    [Header("Hook Usage Params")]
     public float maxDistance = 10f;
     public float minDistance = 1.5f;
     public float speed = 10f;
-    public float releaseForce = 100f;
-    public Transform startPosition;
+    public bool timer = true;
+    //public float releaseForce = 100f; Not in use
+    
+    [Header("Times")]
+    public float maxHookedTime = 10f;
 
+    [Header("Needed Objects")]
+    public Transform startPosition;
     public LineRenderer hookLine;
 
+    // Private
     private bool isActive;
     private bool returnToShip;
+    private float hookTimer;
 
     private BoxCollider2D boxCollider;
     private GameObject player;
@@ -64,17 +72,24 @@ public class Hook : MonoBehaviour
                 {
                     if (attachedAsteroid == null)
                     {
-                        transform.position = startPosition.position;
-                        isActive = false;
-                        returnToShip = false;
-                        boxCollider.enabled = false;
-                        gameObject.SetActive(false);
+                        DisableHook();
+                        player.GetComponent<PlayerController>().ResetHookTimer();
+                        Debug.Log("reseting");
                     }
 
                     //hookLine.enabled = false;
                 }
             }
         }
+    }
+
+    private void DisableHook()
+    {
+        transform.position = startPosition.position;
+        isActive = false;
+        returnToShip = false;
+        boxCollider.enabled = false;
+        gameObject.SetActive(false);
     }
 
     private void CheckAsteroid()
@@ -87,10 +102,23 @@ public class Hook : MonoBehaviour
             {
                 if (joint.enabled)
                 {
-                    if (joint.connectedBody != null) joint.connectedBody.AddForce(transform.up * releaseForce);
+                    //if (joint.connectedBody != null) joint.connectedBody.AddForce(transform.up * releaseForce);
                     if (attachedAsteroid != null) attachedAsteroid = null;
                     joint.enabled = false;
                     transform.position = startPosition.position;
+                }
+            }
+            else
+            {
+                if (timer)
+                {
+                    hookTimer += Time.deltaTime;
+                    Debug.Log("hook timer " + hookTimer);
+                    if(hookTimer > maxHookedTime)
+                    {
+                        Activate();
+                        player.GetComponent<PlayerController>().SetHookTimer();
+                    }
                 }
             }
         }
@@ -99,11 +127,12 @@ public class Hook : MonoBehaviour
     {
         Debug.Log("enabled");
         transform.position = startPosition.position;
+        hookLine.gameObject.SetActive(true);
         if(player != null)
         {
             transform.up = player.transform.up;
+            UpdateLine();
         }
-        hookLine.gameObject.SetActive(true);
     }
 
     private void OnDisable()
@@ -137,8 +166,7 @@ public class Hook : MonoBehaviour
         {
             //if(joint.connectedBody != null) joint.connectedBody.AddForce(transform.up * releaseForce);
             if (attachedAsteroid != null) attachedAsteroid = null;
-            joint.enabled = false;
-            transform.position = startPosition.position;
+            DisableHook();
         }
         else
         {
@@ -152,7 +180,7 @@ public class Hook : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Asteroid asteroid = collision.gameObject.GetComponent<Asteroid>();
-        if (asteroid != null)
+        if (asteroid != null && attachedAsteroid == null)
         {
             returnToShip = true;
             if(asteroid.aSize == Asteroid.AsteroidSize.VERY_SMALL ||
@@ -162,6 +190,10 @@ public class Hook : MonoBehaviour
                 joint.enabled = true;
                 joint.connectedBody = collision.rigidbody;
                 attachedAsteroid = asteroid;
+                if (timer)
+                {
+                    hookTimer = 0;
+                }
             }
 
         }
