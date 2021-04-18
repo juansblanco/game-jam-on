@@ -45,7 +45,7 @@ public class ShipRange : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Asteroid>())
         {
-            Debug.Log("Ahhhhh entró un asteroide nomás");
+            //Debug.Log("Ahhhhh entró un asteroide nomás");
             inRange.Add(collision.gameObject);
         } // if
     } // OnTriggerEnter2D
@@ -54,7 +54,7 @@ public class ShipRange : MonoBehaviour
     {
         try
         {
-            Debug.Log("Ahhhhh saliose un asteroide nomás");
+            //Debug.Log("Ahhhhh saliose un asteroide nomás");
             // Technically this should not give an error
             inRange.Remove(collision.gameObject);
         } // try

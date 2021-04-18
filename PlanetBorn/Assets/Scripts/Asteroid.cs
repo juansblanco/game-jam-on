@@ -13,8 +13,8 @@ public class Asteroid : MonoBehaviour
     {
         GREEN,
         RED,
-        YELLOW,
-        GREY
+        BLUE,
+        BROWN
     }
 
     public enum AsteroidSize
@@ -62,7 +62,7 @@ public class Asteroid : MonoBehaviour
     
     void Update()
     {
-        if (this.aSize == AsteroidSize.ULTRA_MEGA_BIG && this.aColor != AsteroidColor.GREY && !isPlanet)
+        if (this.aSize == AsteroidSize.ULTRA_MEGA_BIG && this.aColor != AsteroidColor.BROWN && !isPlanet)
         {
             Debug.Log("Planet complete");
             this.isPlanet = true;
@@ -107,11 +107,11 @@ public class Asteroid : MonoBehaviour
                 //GetComponent<SpriteRenderer>().color = Color.red;
                 GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor];
                 break;
-            case AsteroidColor.YELLOW:
+            case AsteroidColor.BLUE:
                 //GetComponent<SpriteRenderer>().color = Color.yellow;
                 GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor];
                 break;
-            case AsteroidColor.GREY:
+            case AsteroidColor.BROWN:
                 //GetComponent<SpriteRenderer>().color = Color.grey;
                 GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor];
                 break;
@@ -171,7 +171,7 @@ public class Asteroid : MonoBehaviour
 
     private void ManageGravity()
     {
-        if(aColor != AsteroidColor.GREY)
+        if(aColor != AsteroidColor.BROWN)
         {
             if (gravityCollider == null)
             {
@@ -234,7 +234,7 @@ public class Asteroid : MonoBehaviour
                 asteroid.SetAsteroidSize();
                 Destroy(gameObject);
             }
-            else if (asteroid.aColor == AsteroidColor.GREY)
+            else if (asteroid.aColor == AsteroidColor.BROWN)
             {
                 asteroid.RandomizeAsteroidSize();
             }
@@ -247,7 +247,7 @@ public class Asteroid : MonoBehaviour
                 SetAsteroidSize();
                 Destroy(asteroid.gameObject);
             }
-            else if (asteroid.aColor == AsteroidColor.GREY)
+            else if (asteroid.aColor == AsteroidColor.BROWN)
             {
                 RandomizeAsteroidSize();
             }

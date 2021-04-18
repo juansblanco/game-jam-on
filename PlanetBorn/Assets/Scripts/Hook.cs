@@ -137,7 +137,7 @@ public class Hook : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("disabled");
+        Debug.Log("Hook disabled");
         hookLine.gameObject.SetActive(false);
         joint.enabled = false;
     }

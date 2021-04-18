@@ -21,7 +21,7 @@ public class ShieldBar : MonoBehaviour
     public void SetShield(float shield)
     {
         slider.value = (int)shield;
-        Debug.Log("Cambio vida a " + (int)shield);
+        //Debug.Log("Cambio escudo a " + (int)shield);
     }
 
     public void SetMaxShield(int maxShield)

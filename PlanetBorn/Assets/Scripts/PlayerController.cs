@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
     public float pushCooldown = 2f;
     public float pullCooldown = 2f;
 
+    public float barrierCD = 10;
+
     [Header("Propulsion particles")]
     public ParticleSystem particleLeft;
     public ParticleSystem particleRight;
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
     private float pullTimer = 0;
     private float pushCharge;
     private float pullCharge;
+    private float barrierCDTimer = 0;
     private HealthBar healthBar;
     private ShieldBar shieldBar;
 
@@ -132,9 +135,19 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Debug.Log("Barrera");
-            
-            barrier.Activate();
+            if (barrierCDTimer == 0 || barrier.gameObject.activeSelf)
+            {
+                if (!barrier.gameObject.activeSelf)
+                {
+                    barrier.gameObject.SetActive(true);
+                }
+                else
+                {
+                    barrier.gameObject.SetActive(false);
+                }
+                barrierCDTimer = barrierCD;
+            }
+            //Debug.Log("BarreraCD " + barrierCDTimer);
         }
         RechargeAbilities();
     }
@@ -157,6 +170,7 @@ public class PlayerController : MonoBehaviour
         hookTimer = Mathf.Max(0, hookTimer - Time.deltaTime);
         pushTimer = Mathf.Max(0, pushTimer - Time.deltaTime);
         pullTimer = Mathf.Max(0, pullTimer - Time.deltaTime);
+        barrierCDTimer = Mathf.Max(0, barrierCDTimer - Time.deltaTime);
     }
 
     private void ShieldRegeneration()
@@ -281,6 +295,10 @@ public class PlayerController : MonoBehaviour
         //collisionValue /= 10;
         collisionValue *= collision.rigidbody.mass;
         //Debug.Log("collision value " + collisionValue);
+        if (collision.gameObject.GetComponent<Asteroid>().aColor == Asteroid.AsteroidColor.RED)
+        {
+            collisionValue *= 2;
+        }
         TakeDamage(collisionValue);
         if (collision.gameObject.GetComponent<Asteroid>())
         {

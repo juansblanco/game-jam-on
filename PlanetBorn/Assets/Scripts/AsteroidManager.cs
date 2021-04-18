@@ -22,10 +22,10 @@ public class AsteroidManager : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        GeneracionInicial(numNormales, Asteroid.AsteroidColor.GREY);
+        GeneracionInicial(numNormales, Asteroid.AsteroidColor.BROWN);
         GeneracionInicial(numGreen, Asteroid.AsteroidColor.GREEN);
         GeneracionInicial(numRed, Asteroid.AsteroidColor.RED);
-        GeneracionInicial(numYellow, Asteroid.AsteroidColor.YELLOW);
+        GeneracionInicial(numYellow, Asteroid.AsteroidColor.BLUE);
         GetComponent<BoxCollider2D>().size = mapLimit;
     }
 
@@ -82,11 +82,11 @@ public class AsteroidManager : MonoBehaviour
     {
         if (c.gameObject.GetComponent<Asteroid>())
         {
-            Debug.Log("Nuevo asteroide");
+            //Debug.Log("Nuevo asteroide");
             Asteroid.AsteroidColor color = c.gameObject.GetComponent<Asteroid>().aColor;
             Asteroid.AsteroidSize size = c.gameObject.GetComponent<Asteroid>().aSize;
             Destroy(c.gameObject);
-            if (c.gameObject.GetComponent<Asteroid>().aColor != Asteroid.AsteroidColor.GREY)
+            if (c.gameObject.GetComponent<Asteroid>().aColor != Asteroid.AsteroidColor.BROWN)
             {
                 GeneraNuevoAsteroideColorSize(color, size);
             }
