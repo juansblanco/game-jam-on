@@ -164,11 +164,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3204314325821557692, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
       propertyPath: mapLimit.x
-      value: 150
+      value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 3204314325821557692, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
       propertyPath: mapLimit.y
-      value: 150
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3204314325821557692, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
       propertyPath: numNormales
