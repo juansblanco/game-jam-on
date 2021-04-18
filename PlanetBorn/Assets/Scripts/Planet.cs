@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Planet : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class Planet : MonoBehaviour
     private Rigidbody2D body;
     private CircleCollider2D gravityCollider;
     private float planetHealth;
+    private int asteroidsToNextLevel;
 
     void Start()
     {
@@ -38,6 +40,7 @@ public class Planet : MonoBehaviour
         body.angularVelocity = angularVelocity;
         gravityCollider = gravity.GetComponent<CircleCollider2D>();
         planetHealth = ((int)pSize + 1) * healthBySizeFactor;
+        asteroidsToNextLevel = 2;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -85,7 +88,11 @@ public class Planet : MonoBehaviour
                         && asteroid.aColor != Asteroid.AsteroidColor.BROWN
                         && asteroid.aColor != Asteroid.AsteroidColor.RED)
         {
-            SetPlanetSize(pSize + 1);
+            asteroidsToNextLevel--;
+            if(asteroidsToNextLevel <= 0)
+            {
+                SetPlanetSize(pSize + 1);
+            }
         }
     }
 
@@ -97,15 +104,17 @@ public class Planet : MonoBehaviour
             case PlanetSize.SMALL:
                 pSize = PlanetSize.SMALL;
                 transform.localScale = new Vector3(10, 10, transform.localScale.z);
+                asteroidsToNextLevel = 2;
                 break;
             case PlanetSize.MEDIUM:
                 pSize = PlanetSize.MEDIUM;
                 transform.localScale = new Vector3(12, 12, transform.localScale.z);
+                asteroidsToNextLevel = 3;
                 break;
             case PlanetSize.LARGE:
                 pSize = PlanetSize.LARGE;
                 transform.localScale = new Vector3(14, 14, transform.localScale.z);
-                // Funcionalidad de ganar
+                WinGame();
                 break;
             default:
                 Debug.Log("Incorrect planet size: " + planetSize);
@@ -115,16 +124,23 @@ public class Planet : MonoBehaviour
 
     }
 
+    private void WinGame()
+    {
+        CinemachineVirtualCamera playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<CinemachineVirtualCamera>();
+        playerCamera.Follow = transform;
+        StartCoroutine(GameObject.FindWithTag("Player").GetComponent<PlayerController>().WinGame());
+    }
+
     private void SetPlanetSprite(PlanetSize pSize)
     {
         switch (pSize)
         {
             case PlanetSize.SMALL:
             case PlanetSize.MEDIUM:
-                // Asignar sprite pequeño
+                GetComponent<SpriteRenderer>().sprite = sprites[0];
                 break;
             case PlanetSize.LARGE:
-                // Asignar sprite grande
+                GetComponent<SpriteRenderer>().sprite = sprites[1];
                 break;
         }
     }

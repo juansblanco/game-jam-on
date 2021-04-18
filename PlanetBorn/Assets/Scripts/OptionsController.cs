@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class OptionsController : MonoBehaviour
 {
+    [SerializeField] Sprite[] sprites;
     [SerializeField] Slider volumeSlider;
+    [SerializeField] Image icon;
+
     [SerializeField] float defaultVolume = 0.8f;
     [SerializeField] MusicPlayer musicPlayer;
 
@@ -30,6 +33,14 @@ public class OptionsController : MonoBehaviour
         {
             musicPlayer.SetVolume(volumeSlider.value);
             PlayerPrefsController.SetMasterVolume(volumeSlider.value);
+            if(volumeSlider.value == 0)
+            {
+                icon.sprite = sprites[0];
+            }
+            else
+            {
+                icon.sprite = sprites[1];
+            }
         }
         else
         {

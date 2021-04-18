@@ -230,14 +230,18 @@ public class Asteroid : MonoBehaviour
             && aSize == AsteroidSize.ULTRA_MEGA_BIG && asteroid.aColor != aColor
             && (aColor == AsteroidColor.BLUE || aColor == AsteroidColor.GREEN)
             && (asteroid.aColor == AsteroidColor.BLUE || asteroid.aColor == AsteroidColor.GREEN)){
-            if(aColor == AsteroidColor.BLUE)
+            Planet[] planets = GameObject.FindObjectsOfType<Planet>();
+            if(planets.Length == 0)
             {
-                Debug.Log("destroying blue");
-                Destroy(gameObject);
-            }
-            else
-            {
-                UpgradeToPlanet();
+                if(aColor == AsteroidColor.BLUE)
+                {
+                    Debug.Log("destroying blue");
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    UpgradeToPlanet();
+                }
             }
         }
         else if (collision.gameObject.GetComponent<PlayerController>() &&
