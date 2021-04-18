@@ -55,7 +55,7 @@ MonoBehaviour:
   numYellow: 10
   numNormales: 20
   asteroide: {fileID: 8076499484285625604, guid: 47c1ebbde220b1d4db3f12c6eecb56ba, type: 3}
-  mapLimit: {x: 100, y: 100}
+  mapLimit: {x: 160, y: 90}
   player: {fileID: 5208557140286240614, guid: d704e9cdaf6d761479d4226127284bc8, type: 3}
   playerSpawnDistance: 20
   spawnTime: 30
@@ -98,7 +98,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 100, y: 100}
+  m_Size: {x: 160, y: 90}
   m_EdgeRadius: 0
 --- !u!114 &9140990016290265098
 MonoBehaviour:
@@ -681,7 +681,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 2000
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -748,7 +748,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 100, y: 100, z: 1}
+    m_Scale: {x: 300, y: 300, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -946,7 +946,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1000
+      scalar: 2000
       minScalar: 10
       maxCurve:
         serializedVersion: 2

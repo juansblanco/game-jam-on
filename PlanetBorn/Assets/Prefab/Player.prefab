@@ -10032,6 +10032,7 @@ MonoBehaviour:
   UI: {fileID: 4548873905425192470, guid: 3e996fb93fa669840bfa6f7142bd1ed9, type: 3}
   slowMotionScale: 0.5
   deathTimeToWait: 1
+  winTimeToWait: 4
   forwardForce: 15
   angularForce: 20
   mBoost: 1
