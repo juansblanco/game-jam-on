@@ -41,6 +41,7 @@ public class Planet : MonoBehaviour
         gravityCollider = gravity.GetComponent<CircleCollider2D>();
         planetHealth = ((int)pSize + 1) * healthBySizeFactor;
         asteroidsToNextLevel = 2;
+        GameObject.FindWithTag("PlanetCamera").GetComponent<CinemachineVirtualCamera>().Follow = transform;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -109,7 +110,7 @@ public class Planet : MonoBehaviour
             case PlanetSize.MEDIUM:
                 pSize = PlanetSize.MEDIUM;
                 transform.localScale = new Vector3(12, 12, transform.localScale.z);
-                asteroidsToNextLevel = 3;
+                asteroidsToNextLevel = 4;
                 break;
             case PlanetSize.LARGE:
                 pSize = PlanetSize.LARGE;
@@ -126,8 +127,14 @@ public class Planet : MonoBehaviour
 
     private void WinGame()
     {
-        CinemachineVirtualCamera playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<CinemachineVirtualCamera>();
-        playerCamera.Follow = transform;
+        GameObject mainCamera = GameObject.FindWithTag("MainCamera");
+        if(mainCamera != null)
+            mainCamera.SetActive(false);
+        GameObject minimap = GameObject.FindWithTag("Minimap");
+        if(minimap != null)
+            minimap.SetActive(false);
+        /*GameObject.FindWithTag("MainCamera").SetActive(false);
+        GameObject.FindWithTag("Minimap").SetActive(false);*/
         StartCoroutine(GameObject.FindWithTag("Player").GetComponent<PlayerController>().WinGame());
     }
 
