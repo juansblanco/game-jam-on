@@ -9823,6 +9823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipPosition: {fileID: 898289299389013962}
+  duration: 5
 --- !u!1 &3780850420513417447
 GameObject:
   m_ObjectHideFlags: 0
@@ -10049,6 +10050,7 @@ MonoBehaviour:
   barrierCooldown: 10
   pushCooldown: 2
   pullCooldown: 2
+  barrierCD: 10
   particleLeft: {fileID: 4728021224202760631}
   particleRight: {fileID: 8738104467192439860}
 --- !u!61 &5208557138810392919
@@ -10332,7 +10334,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10376,8 +10378,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
+      key1: {r: 0, g: 0, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -10400,7 +10402,7 @@ LineRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0

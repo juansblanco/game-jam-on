@@ -130,6 +130,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 47253541, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 47253541, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204314325821557690, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
+      propertyPath: m_Size.x
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204314325821557690, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
+      propertyPath: m_Size.y
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 3204314325821557692, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
       propertyPath: numRed
       value: 20
@@ -140,7 +156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3204314325821557692, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
       propertyPath: numYellow
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3204314325821557692, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
       propertyPath: mapLimit.x
