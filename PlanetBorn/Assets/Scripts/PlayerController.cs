@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public float forwardForce;
 
     // Adding some range to keep it a bit smooth
-    [Range(1, 10)]
+    [Range(1, 50)]
     public float angularForce;
 
     public float mBoost;
@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [Header("Mechanics")]
     public ShipRange forceField;
     public Hook hook;
+    public Barrier barrier;
 
     [Header("Stats")]
     public float health;
@@ -32,9 +33,15 @@ public class PlayerController : MonoBehaviour
     public float maxShield;
     public float shieldRegenCooldown;
     public float shieldRegenAmount;
+    public float pushChargeMax;
+    public float pullChargeMax;
+    public float abilityModFactor;
 
     [Header("Timers")]
     public float hookCooldown = 10f;
+    public float barrierCooldown = 10f;
+    public float pushCooldown = 2f;
+    public float pullCooldown = 2f;
 
     [Header("Propulsion particles")]
     public ParticleSystem particleLeft;
@@ -46,6 +53,10 @@ public class PlayerController : MonoBehaviour
     private float mTorque;
     private float shieldRegenTimer;
     private float hookTimer = 0;
+    private float pushTimer = 0;
+    private float pullTimer = 0;
+    private float pushCharge;
+    private float pullCharge;
     private HealthBar healthBar;
     private ShieldBar shieldBar;
 
@@ -59,36 +70,15 @@ public class PlayerController : MonoBehaviour
         body = gameObject.GetComponent<Rigidbody2D>();
         particleLeft.Pause();
         particleRight.Pause();
+        pushCharge = pushChargeMax;
+        pullCharge = pullChargeMax;
     }
 
     // Update is called once per frame
     void Update()
     {
-        hookTimer = Mathf.Max(0, hookTimer - Time.deltaTime);
-        if (Input.GetKey(KeyCode.E)) // Empujar
-        {
-            forceField.Push();
-        }
-
-        if (Input.GetKey(KeyCode.Q))
-        {
-            forceField.Pull();
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            if(hookTimer == 0 || hook.gameObject.activeSelf)
-            {
-                Debug.Log("hook " + hook);
-                if (!hook.gameObject.activeSelf)
-                {
-                    hook.gameObject.SetActive(true);
-                }
-                hook.Activate();
-                hookTimer = hookCooldown;
-            }
-            Debug.Log("hookTimer " + hookTimer);
-        }
+        ManageTimers();
+        ManageAbilities();
 
         if (mType == MovementType.EVERYDIRECTION)
         {
@@ -101,6 +91,73 @@ public class PlayerController : MonoBehaviour
         Boost();
         ShieldRegeneration();
     } // Update
+
+    private void ManageAbilities()
+    {
+        if (Input.GetKey(KeyCode.E)) // Empujar
+        {
+            Debug.Log("push charge " + pushCharge);
+            if(pushCharge > 0)
+            {
+                forceField.Push();
+                pushCharge = Mathf.Max(0, pushCharge - (abilityModFactor * Time.deltaTime));
+                pushTimer = pushCooldown;
+            }
+        }
+
+        if (Input.GetKey(KeyCode.Q)) // Atraer
+        {
+            Debug.Log("pull charge " + pullCharge);
+            if (pullCharge > 0)
+            {
+                forceField.Pull();
+                pullCharge = Mathf.Max(0, pullCharge - (abilityModFactor * Time.deltaTime));
+                pullTimer = pullCooldown;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (hookTimer == 0 || hook.gameObject.activeSelf)
+            {
+                Debug.Log("hook " + hook);
+                if (!hook.gameObject.activeSelf)
+                {
+                    hook.gameObject.SetActive(true);
+                }
+                hook.Activate();
+                hookTimer = hookCooldown;
+            }
+            Debug.Log("hookTimer " + hookTimer);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.Log("Barrera");
+            
+            barrier.Activate();
+        }
+        RechargeAbilities();
+    }
+
+    private void RechargeAbilities()
+    {
+        Debug.Log("push charge: " + pushCharge + " pull charge: " + pullCharge);
+        if(pullCharge < pullChargeMax && pullTimer == 0)
+        {
+            pullCharge = Mathf.Min(pullChargeMax, pullCharge + (abilityModFactor * Time.deltaTime));
+        }       
+        if (pushCharge < pushChargeMax && pushTimer == 0)
+        {
+            pushCharge = Mathf.Min(pushChargeMax, pushCharge + (abilityModFactor * Time.deltaTime));
+        }
+    }
+
+    private void ManageTimers()
+    {
+        hookTimer = Mathf.Max(0, hookTimer - Time.deltaTime);
+        pushTimer = Mathf.Max(0, pushTimer - Time.deltaTime);
+        pullTimer = Mathf.Max(0, pullTimer - Time.deltaTime);
+    }
 
     private void ShieldRegeneration()
     {
@@ -225,7 +282,21 @@ public class PlayerController : MonoBehaviour
         collisionValue *= collision.rigidbody.mass;
         //Debug.Log("collision value " + collisionValue);
         TakeDamage(collisionValue);
+        if (collision.gameObject.GetComponent<Asteroid>())
+        {
+            Debug.Log("Parate");
+            collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
         // Podemos usar esto para calcular los impactos?
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.gameObject.GetComponent<Asteroid>())
+        {
+            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
     }
 
     private void TakeDamage(float collisionValue)
