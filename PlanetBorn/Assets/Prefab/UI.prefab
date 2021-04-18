@@ -1748,6 +1748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2858101354275956992}
   - component: {fileID: 5966812911270032483}
+  - component: {fileID: 8257956636023298839}
   m_Layer: 0
   m_Name: BarrierBar
   m_TagString: Untagged
@@ -1815,7 +1816,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 7315464447283619096}
   m_HandleRect: {fileID: 0}
@@ -1827,6 +1828,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8257956636023298839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091433360359030229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27f55da6faeacb94c908329a138f1d69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 5966812911270032483}
+  barType: 5
 --- !u!1 &1125784923784591646
 GameObject:
   m_ObjectHideFlags: 0

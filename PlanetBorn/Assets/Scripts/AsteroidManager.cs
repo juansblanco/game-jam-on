@@ -108,10 +108,13 @@ public class AsteroidManager : MonoBehaviour
                 GeneraNuevoAsteroideColor(color);
             }
         }
-
         if (c.gameObject.GetComponent<PlayerController>())
         {
-            c.gameObject.GetComponent<Transform>().position = Vector3.zero;
+            Vector2 v = Vector2.zero - (Vector2)c.gameObject.transform.position;
+            Debug.Log(v);
+            c.gameObject.GetComponent<Rigidbody2D>().AddForce(v*0.5f, ForceMode2D.Impulse);
+            c.gameObject.GetComponent<PlayerController>().TakeDamage(4);
+            //c.gameObject.GetComponent<Transform>().position = Vector3.zero;
         }
     }
 
