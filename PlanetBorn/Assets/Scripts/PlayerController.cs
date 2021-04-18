@@ -39,11 +39,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Timers")]
     public float hookCooldown = 10f;
-    public float barrierCooldown = 10f;
     public float pushCooldown = 2f;
     public float pullCooldown = 2f;
-
-    public float barrierCD = 10;
+    public float barrierCD = 10f;
 
     [Header("Propulsion particles")]
     public ParticleSystem particleLeft;
