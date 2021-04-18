@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour
     private BarController pushBar;
     private BarController pullBar;
     private BarController hookBar;
+    private BarController barrierBar;
     private bool canMove;
 
     // Particles 
@@ -163,6 +164,7 @@ public class PlayerController : MonoBehaviour
                     barrier.gameObject.SetActive(false);
                 }
                 barrierCDTimer = barrierCD;
+                barrierBar.SetValue(barrierCD-barrierCDTimer);
             }
             //Debug.Log("BarreraCD " + barrierCDTimer);
         }
@@ -190,6 +192,7 @@ public class PlayerController : MonoBehaviour
         pushTimer = Mathf.Max(0, pushTimer - Time.deltaTime);
         pullTimer = Mathf.Max(0, pullTimer - Time.deltaTime);
         barrierCDTimer = Mathf.Max(0, barrierCDTimer - Time.deltaTime);
+        barrierBar.SetValue(barrierCD-barrierCDTimer);
     }
 
     private void ShieldRegeneration()
@@ -336,7 +339,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void TakeDamage(float collisionValue)
+    public void TakeDamage(float collisionValue)
     {
         Debug.Log("damage: " + collisionValue + " shield: " + shield + " health: " + health);
         shieldRegenTimer = 0;
@@ -394,7 +397,7 @@ public class PlayerController : MonoBehaviour
         }
 
         int x = container.childCount;
-        for (int i = 0; i < (x-1); i++)
+        for (int i = 0; i < x; i++)
         {
             BarController bar = container.GetChild(i).gameObject.GetComponent<BarController>();
 
@@ -430,6 +433,12 @@ public class PlayerController : MonoBehaviour
                 hookBar = bar;
                 hookBar.SetMaxValue((int)hookCooldown);
                 hookBar.SetValue(hookCooldown);
+            }
+            if (bar.getType() == BarController.BarType.BARRIER)
+            {
+                barrierBar = bar;
+                barrierBar.SetMaxValue((int)barrierCD);
+                barrierBar.SetValue(barrierCD);
             }
         }
         
