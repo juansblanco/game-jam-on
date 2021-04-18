@@ -57,9 +57,9 @@ public class PlayerController : MonoBehaviour
     private float hookTimer = 0;
     private float pushTimer = 0;
     private float pullTimer = 0;
+    private float barrierCDTimer = 0;
     private float pushCharge;
     private float pullCharge;
-    private float barrierCDTimer = 0;
     private HealthBar healthBar;
     private ShieldBar shieldBar;
 
@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
 
     private void RechargeAbilities()
     {
-        Debug.Log("push charge: " + pushCharge + " pull charge: " + pullCharge);
+        //Debug.Log("push charge: " + pushCharge + " pull charge: " + pullCharge);
         if(pullCharge < pullChargeMax && pullTimer == 0)
         {
             pullCharge = Mathf.Min(pullChargeMax, pullCharge + (abilityModFactor * Time.deltaTime));

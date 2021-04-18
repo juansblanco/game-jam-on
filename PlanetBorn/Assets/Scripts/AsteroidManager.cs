@@ -18,6 +18,9 @@ public class AsteroidManager : MonoBehaviour
     [Header("Player")] public GameObject player;
     public float playerSpawnDistance;
 
+    public float spawnTime = 30;
+    private float timer;
+
 
     // Start is called before the first frame update
     public void Start()
@@ -27,17 +30,21 @@ public class AsteroidManager : MonoBehaviour
         GeneracionInicial(numRed, Asteroid.AsteroidColor.RED);
         GeneracionInicial(numYellow, Asteroid.AsteroidColor.BLUE);
         GetComponent<BoxCollider2D>().size = mapLimit;
+        timer = spawnTime;
     }
 
+    void Update()
+    {
+        timer = Mathf.Max(0, timer - Time.deltaTime);
+        Spawner();
+    }
     internal void SetPlayer(GameObject nObject)
     {
         player = nObject;
     }
 
     // Update is called once per frame
-    void Update()
-    {
-    }
+    
 
     public void GeneracionInicial(int num, Asteroid.AsteroidColor color)
     {
@@ -67,6 +74,14 @@ public class AsteroidManager : MonoBehaviour
         randomAsteroid.GetComponent<Asteroid>().SetAsteroidSize();
     }
 
+    void GeneraNuevoAsteroideColorPosicion(Asteroid.AsteroidColor color, Vector2 position)
+    {
+        GameObject randomAsteroid = Instantiate(asteroide, position, Quaternion.identity);
+        randomAsteroid.GetComponent<Asteroid>().aColor = color;
+        randomAsteroid.GetComponent<Asteroid>().SetColorBasedOnType();
+        randomAsteroid.GetComponent<Asteroid>().RandomizeAsteroidSize();
+    }
+
     private Vector2 PosicionRandomFueraJugador()
     {
         Vector2 position;
@@ -89,6 +104,7 @@ public class AsteroidManager : MonoBehaviour
             if (c.gameObject.GetComponent<Asteroid>().aColor != Asteroid.AsteroidColor.BROWN)
             {
                 GeneraNuevoAsteroideColorSize(color, size);
+                //Debug.Log("Tamaño nuevo " + size);
             }
             else
             {
@@ -99,6 +115,33 @@ public class AsteroidManager : MonoBehaviour
         if (c.gameObject.GetComponent<PlayerController>())
         {
             c.gameObject.GetComponent<Transform>().position = Vector3.zero;
+        }
+    }
+
+    void Spawner()
+    {
+        if (timer == 0)
+        {
+            Debug.Log("New red");
+            GeneraNuevoAsteroideColor(Asteroid.AsteroidColor.RED);
+            timer = spawnTime;
+        }
+    }
+    
+    //Buen intento pero no sirve :(
+    public void DestroyAsteroid(Asteroid asteroid)
+    {
+        Asteroid.AsteroidColor color = asteroid.aColor;
+        Vector2 position = asteroid.transform.position;
+        Asteroid.AsteroidSize size = asteroid.aSize;
+        Destroy(asteroid.gameObject);
+        position = new Vector2(position.x + 1, position.y + 1);
+        GeneraNuevoAsteroideColorPosicion(color, position);
+        if (size > Asteroid.AsteroidSize.BIG)
+        {
+            Debug.Log("Its big");
+            position = new Vector2(position.x - 1, position.y - 1);
+            GeneraNuevoAsteroideColorPosicion(color, position);
         }
     }
 }

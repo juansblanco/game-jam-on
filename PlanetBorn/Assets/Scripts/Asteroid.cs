@@ -62,13 +62,7 @@ public class Asteroid : MonoBehaviour
     
     void Update()
     {
-        if (this.aSize == AsteroidSize.ULTRA_MEGA_BIG && this.aColor != AsteroidColor.BROWN && !isPlanet)
-        {
-            Debug.Log("Planet complete");
-            this.isPlanet = true;
-            RigidbodyConstraints2D constraints2D = RigidbodyConstraints2D.FreezeAll;
-            this.GetComponent<Rigidbody2D>().constraints = constraints2D;
-        }
+        CheckPlanet();
         /*if (aSize == AsteroidSize.ULTRA_MEGA_BIG && aColor != AsteroidColor.GREY)
         {
             Collider2D c = gravity.GetComponent<Collider2D>();
@@ -83,6 +77,16 @@ public class Asteroid : MonoBehaviour
         // body.AddForce(new Vector2(1, -1) * mForce);
     }
 
+    void CheckPlanet()
+    {
+        if (this.aSize == AsteroidSize.ULTRA_MEGA_BIG && this.aColor != AsteroidColor.BROWN && !isPlanet)
+        {
+            Debug.Log("Planet complete");
+            this.isPlanet = true;
+            RigidbodyConstraints2D constraints2D = RigidbodyConstraints2D.FreezeAll;
+            this.GetComponent<Rigidbody2D>().constraints = constraints2D;
+        }
+    }
     public void RandomizeAsteroidColor()
     {
         aColor = (AsteroidColor) UnityEngine.Random.Range(0, 3);
@@ -93,6 +97,7 @@ public class Asteroid : MonoBehaviour
     {
         aSize = (AsteroidSize) Random.Range(0, 4);
         SetAsteroidSize();
+        Debug.Log("Tamaño nuevo " + aSize);
     }
 
     public void SetColorBasedOnType()
@@ -214,8 +219,29 @@ public class Asteroid : MonoBehaviour
         if (asteroid &&
             asteroid.aColor == aColor)
             AsteroidFusion(asteroid);
+        //No funciona
+        else if (asteroid && asteroid.aColor == AsteroidColor.RED && (aColor == AsteroidColor.GREEN || aColor==AsteroidColor.BLUE))
+        {
+            Debug.Log("Explode1");
+            if (aSize > AsteroidSize.VERY_SMALL)
+            {
+                this.aSize--;
+                SetAsteroidSize();
+                Debug.Log("Tamaño nuevo " + aSize);
+            }
+            if (asteroid.aSize > AsteroidSize.BIG)
+            {
+                asteroid.RandomizeAsteroidSize();
+                RigidbodyConstraints2D constraints2D = RigidbodyConstraints2D.None;
+                asteroid.GetComponent<Rigidbody2D>().constraints = constraints2D;
+            }
+            else
+            {
+                Destroy(asteroid.gameObject);  
+            }
+        }
         else if (collision.gameObject.GetComponent<PlayerController>() &&
-            collision.otherCollider.GetComponent<Asteroid>())
+                 collision.otherCollider.GetComponent<Asteroid>())
         {
             Debug.Log("impulse");
             GetComponent<CinemachineImpulseSource>().GenerateImpulse(3f * body.mass);
@@ -232,6 +258,7 @@ public class Asteroid : MonoBehaviour
             {
                 asteroid.aSize++;
                 asteroid.SetAsteroidSize();
+                Debug.Log("Tamaño nuevo " + asteroid.aSize);
                 Destroy(gameObject);
             }
             else if (asteroid.aColor == AsteroidColor.BROWN)
@@ -245,6 +272,7 @@ public class Asteroid : MonoBehaviour
             {
                 aSize++;
                 SetAsteroidSize();
+                Debug.Log("Tamaño nuevo " + aSize);
                 Destroy(asteroid.gameObject);
             }
             else if (asteroid.aColor == AsteroidColor.BROWN)
@@ -253,4 +281,6 @@ public class Asteroid : MonoBehaviour
             }
         }
     }
+
+    
 }

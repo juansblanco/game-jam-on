@@ -151,6 +151,7 @@ MonoBehaviour:
   aColor: 0
   aSize: 2
   gravity: {fileID: 2766308552274475566}
+  manager: {fileID: 3204314325821557692, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
 --- !u!114 &2142054221789300331
 MonoBehaviour:
   m_ObjectHideFlags: 0
