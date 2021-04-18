@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     public float slowMotionScale;
     public float deathTimeToWait;
 
+    [Header("Win")]
+    public float winTimeToWait;
+
     [Header("Movement config")]
     public float forwardForce;
 
@@ -389,7 +392,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator WinGame()
     {
-        yield return new WaitForSeconds(deathTimeToWait);
+        yield return new WaitForSeconds(winTimeToWait);
         UI.GetComponentInChildren<UIController>().ShowWinWindow(score);
     }
 
