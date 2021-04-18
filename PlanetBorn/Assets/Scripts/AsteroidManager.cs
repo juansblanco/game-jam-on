@@ -20,6 +20,7 @@ public class AsteroidManager : MonoBehaviour
 
     public float spawnTime = 30;
     private float timer;
+    private bool alternate;
 
 
     // Start is called before the first frame update
@@ -120,12 +121,24 @@ public class AsteroidManager : MonoBehaviour
 
     void Spawner()
     {
+        
         if (timer == 0)
         {
             Debug.Log("New red");
             GeneraNuevoAsteroideColor(Asteroid.AsteroidColor.RED);
             timer = spawnTime;
+            if (alternate)
+            {
+                alternate = false;
+                GeneraNuevoAsteroideColor(Asteroid.AsteroidColor.BLUE);
+            }
+            else
+            {
+                alternate = true;
+                GeneraNuevoAsteroideColor(Asteroid.AsteroidColor.GREEN);
+            }
         }
+        
     }
     
     //Buen intento pero no sirve :(
