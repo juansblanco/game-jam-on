@@ -382,10 +382,22 @@ public class PlayerController : MonoBehaviour
 
     public void UILoad()
     {
-        int x = UI.transform.childCount;
-        for (int i = 0; i<x; i++)
+
+        Transform container = null;
+
+        foreach(Transform child in UI.transform.GetChild(0))
         {
-            BarController bar = UI.transform.GetChild(i).gameObject.GetComponent<BarController>();
+            if(child.name == "HUD Window")
+            {
+                container = child.GetChild(0);
+            }
+        }
+
+        int x = container.childCount;
+        for (int i = 0; i < (x-1); i++)
+        {
+            BarController bar = container.GetChild(i).gameObject.GetComponent<BarController>();
+
             if (bar.getType() == BarController.BarType.HEALTH)
             {
                 healthBar = bar;
