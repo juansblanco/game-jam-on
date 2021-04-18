@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [Header("Mechanics")]
     public ShipRange forceField;
     public Hook hook;
+    public Barrier barrier;
 
     [Header("Stats")]
     public float health;
@@ -88,6 +89,13 @@ public class PlayerController : MonoBehaviour
                 hookTimer = hookCooldown;
             }
             Debug.Log("hookTimer " + hookTimer);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.Log("Barrera");
+            
+            barrier.Activate();
         }
 
         if (mType == MovementType.EVERYDIRECTION)
@@ -225,7 +233,21 @@ public class PlayerController : MonoBehaviour
         collisionValue *= collision.rigidbody.mass;
         //Debug.Log("collision value " + collisionValue);
         TakeDamage(collisionValue);
+        if (collision.gameObject.GetComponent<Asteroid>())
+        {
+            Debug.Log("Parate");
+            collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
         // Podemos usar esto para calcular los impactos?
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.gameObject.GetComponent<Asteroid>())
+        {
+            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
     }
 
     private void TakeDamage(float collisionValue)

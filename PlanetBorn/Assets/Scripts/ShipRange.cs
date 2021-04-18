@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class ShipRange : MonoBehaviour
 {
-    [Header("Forces")]
-    public float pullForce;
+    [Header("Forces")] public float pullForce;
     public float pushForce;
 
     private List<GameObject> inRange;
@@ -25,7 +24,7 @@ public class ShipRange : MonoBehaviour
 
             Vector2 dir = asPos - pos;
             dir.Normalize();
-            o.GetComponent<Asteroid>().AddForce(dir, pullForce);
+            o.GetComponent<Asteroid>().AddForce(dir, pushForce);
         } // foreach
     } // Push
 
@@ -33,10 +32,9 @@ public class ShipRange : MonoBehaviour
     {
         Vector2 pos = gameObject.transform.position;
 
-        foreach(GameObject o in inRange)
+        foreach (GameObject o in inRange)
         {
             Vector2 asPos = o.transform.position;
-
             Vector2 dir = asPos - pos;
             dir.Normalize();
             o.GetComponent<Asteroid>().AddForce(dir * -1, pullForce);
@@ -60,7 +58,7 @@ public class ShipRange : MonoBehaviour
             // Technically this should not give an error
             inRange.Remove(collision.gameObject);
         } // try
-        catch(UnityException e)
+        catch (UnityException e)
         {
             Debug.Log(e);
         } // catch
