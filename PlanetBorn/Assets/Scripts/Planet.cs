@@ -128,7 +128,11 @@ public class Planet : MonoBehaviour
     private void WinGame()
     {
         GameObject mainCamera = GameObject.FindWithTag("MainCamera");
-        mainCamera.SetActive(false);
+        if(mainCamera != null)
+            mainCamera.SetActive(false);
+        GameObject minimap = GameObject.FindWithTag("Minimap");
+        if(minimap != null)
+            minimap.SetActive(false);
         /*GameObject.FindWithTag("MainCamera").SetActive(false);
         GameObject.FindWithTag("Minimap").SetActive(false);*/
         StartCoroutine(GameObject.FindWithTag("Player").GetComponent<PlayerController>().WinGame());
