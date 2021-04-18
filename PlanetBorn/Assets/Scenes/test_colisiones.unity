@@ -146,6 +146,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 3204314325821557691, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
+      propertyPath: levelLoader
+      value: 
+      objectReference: {fileID: 8384684247977904671, guid: 13f0f0493651f0f4ba1578c76ece9136, type: 3}
     - target: {fileID: 3204314325821557692, guid: 11770fe1c804132489073ec9c5bf3546, type: 3}
       propertyPath: numRed
       value: 20

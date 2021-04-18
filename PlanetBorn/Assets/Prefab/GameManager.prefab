@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nave: {fileID: 5208557140286240614, guid: d704e9cdaf6d761479d4226127284bc8, type: 3}
   UI: {fileID: 4548873905425192470, guid: 3e996fb93fa669840bfa6f7142bd1ed9, type: 3}
+  levelLoader: {fileID: 8384684247977904671, guid: 13f0f0493651f0f4ba1578c76ece9136, type: 3}
 --- !u!114 &3204314325821557692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,6 +73,7 @@ MonoBehaviour:
   mapLimit: {x: 100, y: 100}
   player: {fileID: 5208557140286240614, guid: d704e9cdaf6d761479d4226127284bc8, type: 3}
   playerSpawnDistance: 20
+  spawnTime: 30
 --- !u!61 &3204314325821557690
 BoxCollider2D:
   m_ObjectHideFlags: 0

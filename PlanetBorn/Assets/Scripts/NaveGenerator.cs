@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class NaveGenerator : MonoBehaviour
 {
-    // Start is called before the first frame update
     public GameObject nave;
-
     public GameObject UI;
+    public GameObject levelLoader;
+
     void Start()
     {
         GeneracionInicial();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void GeneracionInicial()
@@ -27,8 +21,11 @@ public class NaveGenerator : MonoBehaviour
         AsteroidManager aManager = GetComponent<AsteroidManager>();
         CameraGenerator cGenerator = GetComponent<CameraGenerator>();
         GameObject UIObject = Instantiate(UI);
+        GameObject LLObject = Instantiate(levelLoader);
         player.UI = UIObject;
         player.UILoad();
+        UIObject.GetComponentInChildren<UIController>().levelLoader = 
+            LLObject.GetComponent<LevelLoader>();
         cGenerator.SetCameraToFollowPlayer(player);
         aManager.SetPlayer(player.gameObject);
         aManager.Start();
