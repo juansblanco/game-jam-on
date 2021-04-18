@@ -10045,7 +10045,7 @@ MonoBehaviour:
   shield: 50
   maxShield: 50
   shieldRegenCooldown: 5
-  shieldRegenAmount: 0.01
+  shieldRegenAmount: 0.1
   pushChargeMax: 50
   pullChargeMax: 50
   abilityModFactor: 20
@@ -10056,6 +10056,7 @@ MonoBehaviour:
   leftPropulsor: {fileID: 4728021224202760631}
   rightPropulsor: {fileID: 8738104467192439860}
   explosion: {fileID: 1170567192047786, guid: dfbdf2134f769dc4486867bd0989e1f4, type: 3}
+  score: 1000000
 --- !u!61 &5208557138810392919
 BoxCollider2D:
   m_ObjectHideFlags: 0

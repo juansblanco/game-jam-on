@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
     private BarController hookBar;
     private BarController barrierBar;
     private bool canMove;
-    [Header("Initial Score")] public float score = 100000000;
+    [Header("Initial Score")] public float score;
 
     // Particles 
     private Vector2 minMaxEmitter = new Vector2(0, 5);
@@ -197,7 +197,8 @@ public class PlayerController : MonoBehaviour
         pullTimer = Mathf.Max(0, pullTimer - Time.deltaTime);
         barrierCDTimer = Mathf.Max(0, barrierCDTimer - Time.deltaTime);
         barrierBar.SetValue(barrierCD-barrierCDTimer);
-        score -= 1;
+        score = score - 1;
+        Debug.Log(score);
     }
 
     private void ShieldRegeneration()
@@ -346,7 +347,8 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float collisionValue)
     {
-        score -= collisionValue;
+        score = score - collisionValue;
+        Debug.Log(score);
         Debug.Log("damage: " + collisionValue + " shield: " + shield + " health: " + health);
         shieldRegenTimer = 0;
         if(shield > 0)
