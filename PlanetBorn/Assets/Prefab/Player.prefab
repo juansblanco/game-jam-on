@@ -10030,6 +10030,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UI: {fileID: 4548873905425192470, guid: 3e996fb93fa669840bfa6f7142bd1ed9, type: 3}
+  slowMotionScale: 0.5
+  deathTimeToWait: 1
   forwardForce: 15
   angularForce: 20
   mBoost: 1
@@ -10047,12 +10049,12 @@ MonoBehaviour:
   pullChargeMax: 50
   abilityModFactor: 20
   hookCooldown: 10
-  barrierCooldown: 10
   pushCooldown: 2
   pullCooldown: 2
   barrierCD: 10
-  particleLeft: {fileID: 4728021224202760631}
-  particleRight: {fileID: 8738104467192439860}
+  leftPropulsor: {fileID: 4728021224202760631}
+  rightPropulsor: {fileID: 8738104467192439860}
+  explosion: {fileID: 1170567192047786, guid: dfbdf2134f769dc4486867bd0989e1f4, type: 3}
 --- !u!61 &5208557138810392919
 BoxCollider2D:
   m_ObjectHideFlags: 0

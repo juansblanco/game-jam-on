@@ -41,10 +41,7 @@ public class AsteroidManager : MonoBehaviour
     internal void SetPlayer(GameObject nObject)
     {
         player = nObject;
-    }
-
-    // Update is called once per frame
-    
+    }    
 
     public void GeneracionInicial(int num, Asteroid.AsteroidColor color)
     {

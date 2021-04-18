@@ -14,7 +14,8 @@ public class CameraGenerator : MonoBehaviour
 
     private CinemachineVirtualCamera minimapCamera;
 
-    private bool camera = true;
+    private bool playerCamera = true;
+    private PlayerController player;
     
     
     void Update()
@@ -31,12 +32,14 @@ public class CameraGenerator : MonoBehaviour
         minimapCamera = GameObject.FindWithTag("Minimap").GetComponent<CinemachineVirtualCamera>();
         minimapCamera.gameObject.SetActive(false);
         virtualCamera.Follow = player.transform;
+        this.player = player;
     }
 
     public void activateMinimap()
     {
-        virtualCamera.gameObject.SetActive(camera);
-        minimapCamera.gameObject.SetActive(!camera);
-        camera = !camera;
+        playerCamera = !playerCamera;
+        virtualCamera.gameObject.SetActive(playerCamera);
+        minimapCamera.gameObject.SetActive(!playerCamera);
+        player.CanMove = playerCamera;
     }
 }
