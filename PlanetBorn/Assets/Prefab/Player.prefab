@@ -10045,7 +10045,7 @@ MonoBehaviour:
   shield: 50
   maxShield: 50
   shieldRegenCooldown: 5
-  shieldRegenAmount: 0.01
+  shieldRegenAmount: 0.1
   pushChargeMax: 50
   pullChargeMax: 50
   abilityModFactor: 20
