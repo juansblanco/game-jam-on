@@ -358,7 +358,7 @@ public class PlayerController : MonoBehaviour
     {
         canMove = false;
         Time.timeScale = slowMotionScale;
-        GetComponentInChildren<SpriteRenderer>().color = new Color(0.2169811f, 0.2169811f, 0.2169811f);
+        GetComponent<SpriteRenderer>().sprite = null;
         Instantiate(explosion, transform.position, Quaternion.identity);
         StartCoroutine(LoseGame());
     }
@@ -367,7 +367,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(deathTimeToWait);
         Time.timeScale = 1;
-        Debug.Log("game over");
+        UI.GetComponentInChildren<UIController>().ShowLoseWindow();
         Destroy(gameObject);
     }
 
