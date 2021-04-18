@@ -137,10 +137,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: f6c19ba80cfac004bac5a2d2c0a3e59d, type: 3}
-  - {fileID: 21300000, guid: 83aa2117694b63e4ab2663000c93e30e, type: 3}
   - {fileID: 21300000, guid: 278f3fea65844464fb483307e2b6caa6, type: 3}
+  - {fileID: 21300000, guid: 83aa2117694b63e4ab2663000c93e30e, type: 3}
   - {fileID: 21300000, guid: dc0848f284b49534e9761a28cc808715, type: 3}
+  - {fileID: 21300000, guid: f6c19ba80cfac004bac5a2d2c0a3e59d, type: 3}
+  - {fileID: 21300000, guid: f3ada3c543c853d47a46adc96012462a, type: 3}
+  - {fileID: 21300000, guid: ffff97aae93389d44922236ba7a52b20, type: 3}
+  - {fileID: 21300000, guid: 18eccee16c5098d4da43fe11f156d04c, type: 3}
+  - {fileID: 21300000, guid: 5328867085f126e44850b19e76cb95ef, type: 3}
   mForce: 100
   mTorque: 5
   initialForce: 1
@@ -189,13 +193,6 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 1000
     m_PropagationSpeed: 343
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 12
-  m_IgnoreTag: 
-  m_UseImpactDirection: 1
-  m_ScaleImpactWithMass: 1
-  m_ScaleImpactWithSpeed: 1
 --- !u!1001 &5745610113731211349
 PrefabInstance:
   m_ObjectHideFlags: 0

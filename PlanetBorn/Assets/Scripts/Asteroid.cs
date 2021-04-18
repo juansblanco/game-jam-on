@@ -28,7 +28,8 @@ public class Asteroid : MonoBehaviour
         ULTRA_MEGA_BIG
     }
 
-    [Header("Configure sprites")] public Sprite[] sprites;
+    [Header("Configure sprites")] 
+    public Sprite[] sprites;
 
     [Header("Movement config")] 
     public float mForce;
@@ -100,19 +101,19 @@ public class Asteroid : MonoBehaviour
         {
             case AsteroidColor.GREEN:
                 //GetComponent<SpriteRenderer>().color = Color.green;
-                GetComponent<SpriteRenderer>().sprite = sprites[2];
+                GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor];
                 break;
             case AsteroidColor.RED:
                 //GetComponent<SpriteRenderer>().color = Color.red;
-                GetComponent<SpriteRenderer>().sprite = sprites[1];
+                GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor];
                 break;
             case AsteroidColor.YELLOW:
                 //GetComponent<SpriteRenderer>().color = Color.yellow;
-                GetComponent<SpriteRenderer>().sprite = sprites[3];
+                GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor];
                 break;
             case AsteroidColor.GREY:
                 //GetComponent<SpriteRenderer>().color = Color.grey;
-                GetComponent<SpriteRenderer>().sprite = sprites[0];
+                GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor];
                 break;
         }
     }
@@ -125,30 +126,37 @@ public class Asteroid : MonoBehaviour
         {
             case AsteroidSize.VERY_SMALL:
                 scale = new Vector3(1, 1, transform.localScale.z);
+                GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor];
                 body.mass = 1f;
                 break;
             case AsteroidSize.SMALL:
                 scale = new Vector3(1.5f, 1.5f, transform.localScale.z);
+                GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor];
                 body.mass = 1.3f;
                 break;
             case AsteroidSize.MEDIUM:
                 scale = new Vector3(2, 2, transform.localScale.z);
+                GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor];
                 body.mass = 1.6f;
                 break;
             case AsteroidSize.BIG:
                 scale = new Vector3(3, 3, transform.localScale.z);
+                GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor + 4];
                 body.mass = 2f;
                 break;
             case AsteroidSize.VERY_BIG:
                 scale = new Vector3(4, 4, transform.localScale.z);
+                GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor + 4];
                 body.mass = 2.3f;
                 break;
             case AsteroidSize.ULTRA_BIG:
                 scale = new Vector3(5, 5, transform.localScale.z);
+                GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor + 4];
                 body.mass = 2.6f;
                 break;
             case AsteroidSize.ULTRA_MEGA_BIG:
                 scale = new Vector3(8, 8, transform.localScale.z);
+                GetComponent<SpriteRenderer>().sprite = sprites[(int)aColor + 4];
                 body.mass = 3f;
                 break;
             default:
