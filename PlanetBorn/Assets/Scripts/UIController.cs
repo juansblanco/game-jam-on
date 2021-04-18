@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIController : MonoBehaviour
 {
@@ -50,7 +51,7 @@ public class UIController : MonoBehaviour
 
     public void ShowWinWindow(float score)
     {
-        winWindow.GetComponent<InputField>().text = score.ToString();
+        winWindow.GetComponentInChildren<TextMeshProUGUI>().text = score.ToString();
         Time.timeScale = 0;
         gameOver = true;
         winWindow.SetActive(true);

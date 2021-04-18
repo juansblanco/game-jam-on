@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
     private BarController hookBar;
     private BarController barrierBar;
     private bool canMove;
-    [Header("Initial Score")] public float score = 10000;
+    [Header("Initial Score")] public float score = 100000000;
 
     // Particles 
     private Vector2 minMaxEmitter = new Vector2(0, 5);
